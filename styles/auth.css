@@ -1,0 +1,273 @@
+/* ESTILO GERAL DA PÁGINA */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* CONTAINER PRINCIPAL (divide tela em duas partes) */
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  /*  LADO ESQUERDO - LOGIN */
+  .login-side {
+    flex: 1;
+    background-color: #0D1321; 
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /*  CAIXA DE LOGIN */
+  .login-box {
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Título do login */
+  .login-box h2 {
+    margin-bottom: 0;
+  }
+  
+  /* Subtítulo */
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 25px;
+    opacity: 0.9;
+  }
+  
+  /*  INPUTS DE EMAIL E SENHA */
+  input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /*  BOTÃO PRINCIPAL (Login, Cadastrar etc.) */
+  button {
+    width: 100%;
+    background-color: #ffffff;
+    color: #002B59;
+    font-weight: bold;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 9px;
+  }
+  
+  /* Efeito ao passar o mouse */
+  button:hover {
+    background-color: #e6e6e6;
+  }
+  
+  /*  Texto de “Não tem conta? Cadastre-se” */
+  .signup-text {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .signup-text a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  /* LADO DIREITO - LOGO OU IMAGEM */
+  .logo-side {
+    flex: 1;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Tamanho da logo */
+  .logo {
+    width: 300px;
+    max-width: 80%;
+  }
+  
+  /*  POPUP PADRÃO (mensagens de sucesso/erro) */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background-color: #002B59;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    text-align: center;
+    z-index: 20;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: 0.3s transform ease, 0.3s opacity ease;
+  }
+  
+  /* Quando o popup aparece */
+  .popup.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  
+  /* Ícone (✔ ou ✖) */
+  .popup .icon {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Texto do popup */
+  .popup .text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .popup .text .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .popup .text .message {
+    font-size: 14px;
+    margin-top: 3px;
+  }
+  
+  /*  POPUP DO QR CODE (2FA/MFA) */
+  .popup-modal {
+    display: flex; 
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px); /*  Fundo desfocado */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Caixa interna do QR Code */
+  .popup-modal .popup-content {
+    background-color: #002B59;
+    color: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Ícone do topo do popup */
+  .popup-modal .icon {
+    font-size: 36px;
+  }
+  
+  /* Imagem do QR */
+  .popup-modal #qrPopupImg {
+    width: 150px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  /* Botão de fechar o QR popup */
+  .popup-modal #closeQRBtn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #002B59;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .popup-modal #closeQRBtn:hover {
+    background-color: #e6e6e6;
+  }
+  
+  /*  POPUP DE VERIFICAÇÃO MFA (código do app autenticador) */
+  .mfa-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  /* Quando o MFA aparece */
+  .mfa-popup.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  /* Caixa central do MFA */
+  .mfa-popup-content {
+    background: #ffffff15;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Botão de fechar MFA */
+  .mfa-popup-content button:last-child {
+    margin-top: 20px;
+    background: #ff4c4c;
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .mfa-popup-content button:last-child:hover {
+    background: #e03e3e;
+  }
+  
+  /*  Animação suave de aparição */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
