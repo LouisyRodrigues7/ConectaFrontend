@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Login - ConectaBus</title>
-  <link rel="stylesheet" href="auth.css">
-  <script src="js/api.js"></script>
+
+  <!-- Caminho corrigido -->
+  <link rel="stylesheet" href="styles/auth.css">
+
+  <!-- Caminho corrigido -->
+  <script src="js/api.js" defer></script>
+  <script src="js/login.js" defer></script>
 </head>
+
 <body>
   <div class="container">
-    <!-- LADO ESQUERDO (login) -->
     <div class="login-side">
       <div class="login-box">
         <h2>Bem-vindo ao ConectaBus</h2>
@@ -23,14 +28,13 @@
         </p>
       </div>
     </div>
-
-    <!-- LADO DIREITO (logo) -->
+    
     <div class="logo-side">
       <img src="assets/logo_conectabus.png" alt="Logo ConectaBus" class="logo">
     </div>
   </div>
 
-  <!-- POPUP DE MFA -->
+  <!-- Pop-up de MFA -->
   <div id="mfa-popup" class="popup">
     <div class="text">
       <span class="icon">🔐</span>
@@ -41,7 +45,5 @@
       <button id="closeMfaBtn" style="margin-top:10px;padding:6px 12px;border-radius:8px;border:none;background-color:#999;color:white;cursor:pointer;">Fechar</button>
     </div>
   </div>
-
-  <script src="js/login.js" defer></script>
 </body>
 </html>
