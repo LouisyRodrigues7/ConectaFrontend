@@ -1,5 +1,5 @@
 // js/login.js
-import { API_URL } from "./api.js";
+import { API_URL } from "js/api.js";
 
 async function login() {
   const email = document.getElementById("email").value.trim();
