@@ -1,4 +1,3 @@
-// js/login.js
 import { API_URL } from "./api.js";
 
 async function login() {
@@ -23,12 +22,10 @@ async function login() {
     if (res.ok && result.success) {
       showPopup("Sucesso", "Login realizado com sucesso!", true);
 
-      // Redirecionar após 1s
       setTimeout(() => {
         window.location.href = "home.html";
       }, 1000);
     } else if (result.requireToken) {
-      // Se o backend pedir o token MFA
       showTokenField();
     } else {
       showPopup("Erro", result.message || "Falha no login.", false);
@@ -81,5 +78,8 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// Garante que o botão funcione
-document.getElementById("loginBtn").addEventListener("click", login);
+// 🔧 Garante que o evento seja adicionado após o carregamento do DOM
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("loginBtn");
+  if (btn) btn.addEventListener("click", login);
+});

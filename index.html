@@ -5,11 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - ConectaBus</title>
 
-  <!-- Estilo -->
   <link rel="stylesheet" href="styles/auth.css" />
-
-  <!-- Carrega apenas o script principal como módulo -->
-  <script type="module" src="js/login.js"></script>
+  <script type="module" src="js/login.js" defer></script>
 </head>
 
 <body>
@@ -34,8 +31,8 @@
     </div>
   </div>
 
-  <!-- Pop-up MFA (autenticação de 2 fatores) -->
-  <div id="mfa-popup" class="popup">
+  <!-- Pop-up MFA -->
+  <div id="mfa-popup" class="popup" style="display:none;">
     <div class="text">
       <span class="icon">🔐</span>
       <p class="title">Autenticação MFA</p>

@@ -49,7 +49,7 @@ function showQRPopup(qrUrl) {
   if (closeBtn) {
     closeBtn.onclick = () => {
       popup.classList.remove("show");
-      setTimeout(() => (window.location.href = "index.html"), 300);
+      setTimeout(() => (window.location.href = "index.html"), 500);
     };
   }
 }
@@ -89,5 +89,8 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// garante que o botão funciona ao carregar
-document.getElementById("signupBtn").addEventListener("click", signup);
+// ✅ Garante que o botão só seja vinculado após o DOM carregar
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("signupBtn");
+  if (btn) btn.addEventListener("click", signup);
+});
