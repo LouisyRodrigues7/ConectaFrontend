@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro - ConectaBus</title>
-  <link rel="stylesheet" href="styles/auth.css">
-  <script src="js/api.js"></script>
+
+  <!-- Estilo -->
+  <link rel="stylesheet" href="styles/auth.css" />
+
+  <!-- Scripts: API primeiro, depois signup -->
+  <script src="js/api.js" defer></script>
+  <script src="js/signup.js" defer></script>
 </head>
+
 <body>
   <div class="container">
     <!-- LADO ESQUERDO (cadastro) -->
@@ -14,16 +21,16 @@
         <h2>Bem-vindo ao ConectaBus</h2>
         <p class="subtitle">Crie sua conta</p>
 
-        <input id="name" placeholder="Nome completo"><br>
-        <input id="email" placeholder="E-mail"><br>
-        <input id="password" type="password" placeholder="Senha"><br>
+        <input id="name" placeholder="Nome completo" /><br />
+        <input id="email" placeholder="E-mail" /><br />
+        <input id="password" type="password" placeholder="Senha" /><br />
 
         <label>Tipo de usuário:</label>
         <select id="userType">
           <option value="Estudante">Estudante</option>
           <option value="Governo">Governo</option>
           <option value="Cidadão">Cidadão</option>
-        </select><br><br>
+        </select><br /><br />
 
         <button onclick="signup()">Cadastrar</button>
 
@@ -35,21 +42,24 @@
 
     <!-- LADO DIREITO (logo) -->
     <div class="logo-side">
-      <img src="logo_conectabus.png" alt="Logo ConectaBus" class="logo">
+      <img src="assets/logo_conectabus.png" alt="Logo ConectaBus" class="logo" />
     </div>
   </div>
-  
-  <!-- POPUP DE QR CODE  -->
+
+  <!-- POPUP DE QR CODE -->
   <div id="qr-popup" class="mfa-popup">
     <div class="mfa-popup-content">
       <h3>📱 Cadastro realizado com sucesso!</h3>
       <p>Escaneie este QR Code no Microsoft Authenticator.</p>
-      <img id="qrPopupImg" style="width: 160px; margin: 15px 0;">
-      <br>
-      <button id="closeQRBtn" style="background:#0a6624;color:white;padding:10px 18px;border:none;border-radius:10px;cursor:pointer;">Fechar</button>
+      <img id="qrPopupImg" style="width: 160px; margin: 15px 0" />
+      <br />
+      <button
+        id="closeQRBtn"
+        style="background:#0a6624;color:white;padding:10px 18px;border:none;border-radius:10px;cursor:pointer;"
+      >
+        Fechar
+      </button>
     </div>
   </div>
-
-  <script src="js/signup.js"></script>
 </body>
 </html>

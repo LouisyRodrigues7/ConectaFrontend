@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - ConectaBus</title>
 
-  <!-- Caminho corrigido -->
-  <link rel="stylesheet" href="styles/auth.css">
+  <!-- Estilo -->
+  <link rel="stylesheet" href="styles/auth.css" />
 
-  <!-- Caminho corrigido -->
+  <!-- Scripts: API primeiro, depois login -->
   <script src="js/api.js" defer></script>
   <script src="js/login.js" defer></script>
 </head>
@@ -19,8 +20,8 @@
         <h2>Bem-vindo ao ConectaBus</h2>
         <p class="subtitle">Acesse sua conta</p>
 
-        <input id="email" placeholder="E-mail"><br>
-        <input id="password" type="password" placeholder="Senha"><br>
+        <input id="email" placeholder="E-mail" /><br />
+        <input id="password" type="password" placeholder="Senha" /><br />
         <button type="button" onclick="login()">Entrar</button>
 
         <p class="signup-text">
@@ -30,19 +31,33 @@
     </div>
     
     <div class="logo-side">
-      <img src="assets/logo_conectabus.png" alt="Logo ConectaBus" class="logo">
+      <img src="assets/logo_conectabus.png" alt="Logo ConectaBus" class="logo" />
     </div>
   </div>
 
-  <!-- Pop-up de MFA -->
+  <!-- Pop-up MFA (autenticação de 2 fatores) -->
   <div id="mfa-popup" class="popup">
     <div class="text">
       <span class="icon">🔐</span>
       <p class="title">Autenticação MFA</p>
       <p class="message">Digite o código do Microsoft Authenticator</p>
-      <input id="token" placeholder="Código MFA" style="padding:10px;border-radius:8px;border:none;width:200px;text-align:center;font-size:16px;margin-top:10px;"><br>
-      <button onclick="verifyMFA()" style="margin-top:10px;padding:10px 20px;border-radius:8px;border:none;background-color:#002B59;color:white;cursor:pointer;">Verificar</button>
-      <button id="closeMfaBtn" style="margin-top:10px;padding:6px 12px;border-radius:8px;border:none;background-color:#999;color:white;cursor:pointer;">Fechar</button>
+      <input
+        id="token"
+        placeholder="Código MFA"
+        style="padding:10px;border-radius:8px;border:none;width:200px;text-align:center;font-size:16px;margin-top:10px;"
+      /><br />
+      <button
+        onclick="verifyMFA()"
+        style="margin-top:10px;padding:10px 20px;border-radius:8px;border:none;background-color:#002B59;color:white;cursor:pointer;"
+      >
+        Verificar
+      </button>
+      <button
+        id="closeMfaBtn"
+        style="margin-top:10px;padding:6px 12px;border-radius:8px;border:none;background-color:#999;color:white;cursor:pointer;"
+      >
+        Fechar
+      </button>
     </div>
   </div>
 </body>

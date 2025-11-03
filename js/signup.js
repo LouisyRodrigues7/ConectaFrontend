@@ -1,42 +1,57 @@
+// js/signup.js
+
 async function signup() {
   const data = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    password: document.getElementById("password").value,
-    userType: document.getElementById("userType").value
+    name: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    password: document.getElementById("password").value.trim(),
+    userType: document.getElementById("userType").value,
   };
+
+  if (!data.name || !data.email || !data.password) {
+    showPopup("Erro", "Preencha todos os campos!", false);
+    return;
+  }
 
   try {
     const res = await fetch(`${API_BASE_URL}/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     const result = await res.json();
 
-    if (result.qrCodeUrl) {
+    if (res.ok && result.qrCodeUrl) {
       showQRPopup(result.qrCodeUrl);
     } else {
-      showPopup("Erro", result.message, false);
+      showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
     }
   } catch (error) {
     console.error("Erro no cadastro:", error);
-    showPopup("Erro", "Ocorreu um erro no cadastro.", false);
+    showPopup("Erro", "Não foi possível conectar ao servidor.", false);
   }
 }
 
 function showQRPopup(qrUrl) {
   const popup = document.getElementById("qr-popup");
   const qrImg = document.getElementById("qrPopupImg");
+
+  if (!popup || !qrImg) {
+    console.error("Popup de QR Code não encontrado.");
+    return;
+  }
+
   qrImg.src = qrUrl;
   popup.classList.add("show");
 
   const closeBtn = document.getElementById("closeQRBtn");
-  closeBtn.onclick = () => {
-    popup.classList.remove("show");
-    setTimeout(() => window.location.href = "index.html", 300);
-  };
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      popup.classList.remove("show");
+      setTimeout(() => (window.location.href = "index.html"), 300);
+    };
+  }
 }
 
 function showPopup(title, message, success = true) {
@@ -46,7 +61,7 @@ function showPopup(title, message, success = true) {
   const icon = document.createElement("div");
   icon.className = "icon";
   icon.innerHTML = success ? "✔" : "✖";
-  icon.style.color = success ? "#0a6624" : "#ff4c4c"; 
+  icon.style.color = success ? "#0a6624" : "#ff4c4c";
 
   const text = document.createElement("div");
   text.className = "text";
@@ -54,7 +69,7 @@ function showPopup(title, message, success = true) {
   const popupTitle = document.createElement("h3");
   popupTitle.className = "title";
   popupTitle.innerText = title;
-  popupTitle.style.color = "#ffffff"; 
+  popupTitle.style.color = "#ffffff";
 
   const popupMessage = document.createElement("p");
   popupMessage.className = "message";
