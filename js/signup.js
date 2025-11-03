@@ -1,4 +1,4 @@
-// js/signup.js
+import { API_URL } from "./api.js";
 
 async function signup() {
   const data = {
@@ -14,7 +14,7 @@ async function signup() {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/signup`, {
+    const res = await fetch(`${API_URL}/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -88,3 +88,6 @@ function showPopup(title, message, success = true) {
     setTimeout(() => popup.remove(), 300);
   }, 2500);
 }
+
+// garante que o botão funciona ao carregar
+document.getElementById("signupBtn").addEventListener("click", signup);

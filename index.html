@@ -8,9 +8,8 @@
   <!-- Estilo -->
   <link rel="stylesheet" href="styles/auth.css" />
 
-  <!-- Scripts: API primeiro, depois login -->
-  <script src="js/api.js" defer></script>
-  <script src="js/login.js" defer></script>
+  <!-- Carrega apenas o script principal como módulo -->
+  <script type="module" src="js/login.js"></script>
 </head>
 
 <body>
@@ -22,7 +21,7 @@
 
         <input id="email" placeholder="E-mail" /><br />
         <input id="password" type="password" placeholder="Senha" /><br />
-        <button type="button" onclick="login()">Entrar</button>
+        <button id="loginBtn">Entrar</button>
 
         <p class="signup-text">
           Não tem uma conta? <a href="signup.html">Cadastre-se aqui</a>
@@ -47,7 +46,7 @@
         style="padding:10px;border-radius:8px;border:none;width:200px;text-align:center;font-size:16px;margin-top:10px;"
       /><br />
       <button
-        onclick="verifyMFA()"
+        id="verifyMfaBtn"
         style="margin-top:10px;padding:10px 20px;border-radius:8px;border:none;background-color:#002B59;color:white;cursor:pointer;"
       >
         Verificar

@@ -8,9 +8,8 @@
   <!-- Estilo -->
   <link rel="stylesheet" href="styles/auth.css" />
 
-  <!-- Scripts: API primeiro, depois signup -->
-  <script src="js/api.js" defer></script>
-  <script src="js/signup.js" defer></script>
+  <!-- Carrega apenas o script principal como módulo -->
+  <script type="module" src="js/signup.js"></script>
 </head>
 
 <body>
@@ -32,7 +31,7 @@
           <option value="Cidadão">Cidadão</option>
         </select><br /><br />
 
-        <button onclick="signup()">Cadastrar</button>
+        <button id="signupBtn">Cadastrar</button>
 
         <p class="signup-text">
           Já tem uma conta? <a href="index.html">Entrar</a>
