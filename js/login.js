@@ -1,4 +1,5 @@
 // js/login.js
+import { API_URL } from "./api.js";
 
 async function login() {
   const email = document.getElementById("email").value.trim();
@@ -11,7 +12,7 @@ async function login() {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/login`, {
+    const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, token }),
@@ -79,3 +80,6 @@ function showPopup(title, message, success = true) {
     setTimeout(() => popup.remove(), 300);
   }, 2500);
 }
+
+// Garante que o botão funcione
+document.getElementById("loginBtn").addEventListener("click", login);
