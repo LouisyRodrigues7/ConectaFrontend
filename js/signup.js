@@ -1,4 +1,4 @@
-import { API_URL } from "js/api.js";
+import { API_URL } from ".api.js";
 
 async function signup() {
   const data = {
