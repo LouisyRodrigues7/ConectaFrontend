@@ -11,7 +11,6 @@ async function login() {
   }
 
   try {
-    // Envia apenas email e senha no primeiro passo
     const res = await fetch(`${API_URL}/api/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -19,25 +18,29 @@ async function login() {
     });
 
     const result = await res.json();
+    console.log("🔍 Resposta do servidor:", result); // 👈 mostra o retorno real
 
     // 🔸 Caso o backend solicite MFA
-    if (result.message?.includes("MFA") || result.requireToken) {
+    if (result.requireToken || result.message?.toLowerCase().includes("mfa")) {
       document.getElementById("mfa-popup").style.display = "flex";
       localStorage.setItem("pendingEmail", email);
       return;
     }
 
     // 🔸 Login comum (sem MFA)
-    if (res.ok && result.success) {
+    if (res.ok && (result.success || result.token)) {
       showPopup("Sucesso", "Login realizado com sucesso!", true);
       setTimeout(() => {
         window.location.href = "home.html";
       }, 1000);
-    } else {
-      showPopup("Erro", result.message || "Falha no login.", false);
+      return;
     }
+
+    // 🔸 Caso o backend retorne erro ou formato inesperado
+    showPopup("Erro", result.message || "Falha no login. Verifique suas credenciais.", false);
+
   } catch (error) {
-    console.error("Erro no login:", error);
+    console.error("❌ Erro no login:", error);
     showPopup("Erro", "Não foi possível conectar ao servidor.", false);
   }
 }
@@ -60,11 +63,11 @@ async function verifyMfa() {
     });
 
     const result = await res.json();
+    console.log("🔍 Resposta verificação MFA:", result);
 
-    if (res.ok && result.success) {
+    if (res.ok && (result.success || result.token)) {
       showPopup("Sucesso", "MFA verificado com sucesso!", true);
       localStorage.removeItem("pendingEmail");
-
       setTimeout(() => {
         window.location.href = "home.html";
       }, 1000);
@@ -72,7 +75,7 @@ async function verifyMfa() {
       showPopup("Erro", result.message || "Código MFA inválido.", false);
     }
   } catch (error) {
-    console.error("Erro ao verificar MFA:", error);
+    console.error("❌ Erro ao verificar MFA:", error);
     showPopup("Erro", "Falha ao verificar MFA.", false);
   }
 }
