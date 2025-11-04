@@ -176,7 +176,7 @@
       opacity: 0;
   }
 
-  /* --- Modal MFA fixo centralizado --- */
+
 #mfa-popup {
   position: fixed;
   top: 0;
@@ -187,8 +187,9 @@
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 100001; /* aumentado para garantir sobreposição */
 }
+
 
 /* --- Caixa branca central --- */
 #mfa-popup .text {
