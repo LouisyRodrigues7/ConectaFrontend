@@ -18,12 +18,12 @@ async function login() {
     });
 
     const result = await res.json();
-    console.log("🔍 Resposta do servidor:", result); // 👈 mostra o retorno real
+    console.log("🔍 Resposta do servidor:", result);
 
     // 🔸 Caso o backend solicite MFA
-    if (result.requireToken || result.message?.toLowerCase().includes("mfa")) {
-      document.getElementById("mfa-popup").style.display = "flex";
-      localStorage.setItem("pendingEmail", email);
+    if (result.requireToken || (result.message && result.message.toLowerCase().includes("mfa"))) {
+      console.log("🟢 Requer MFA — abrindo pop-up...");
+      openMfaPopup(email);
       return;
     }
 
@@ -36,12 +36,31 @@ async function login() {
       return;
     }
 
-    // 🔸 Caso o backend retorne erro ou formato inesperado
     showPopup("Erro", result.message || "Falha no login. Verifique suas credenciais.", false);
 
   } catch (error) {
     console.error("❌ Erro no login:", error);
     showPopup("Erro", "Não foi possível conectar ao servidor.", false);
+  }
+}
+
+// 🔹 Abre o pop-up MFA
+function openMfaPopup(email) {
+  const popup = document.getElementById("mfa-popup");
+  if (popup) {
+    popup.style.display = "flex";
+    popup.classList.add("visible");
+    localStorage.setItem("pendingEmail", email);
+  }
+}
+
+// 🔹 Fecha o pop-up de MFA
+function closeMfaPopup() {
+  const popup = document.getElementById("mfa-popup");
+  if (popup) {
+    popup.style.display = "none";
+    popup.classList.remove("visible");
+    document.getElementById("token").value = "";
   }
 }
 
@@ -68,6 +87,7 @@ async function verifyMfa() {
     if (res.ok && (result.success || result.token)) {
       showPopup("Sucesso", "MFA verificado com sucesso!", true);
       localStorage.removeItem("pendingEmail");
+      closeMfaPopup();
       setTimeout(() => {
         window.location.href = "home.html";
       }, 1000);
@@ -80,58 +100,59 @@ async function verifyMfa() {
   }
 }
 
-// 🔹 Fecha o pop-up de MFA
-function closeMfaPopup() {
-  const popup = document.getElementById("mfa-popup");
-  if (popup) {
-    popup.style.display = "none";
-    document.getElementById("token").value = "";
-  }
-}
-
-// 🔹 Exibe um pop-up de status (sucesso/erro)
+// 🔹 Exibe pop-up genérico de status
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
-  popup.className = "popup";
+  popup.className = "popup-message";
 
   const icon = document.createElement("div");
   icon.className = "icon";
   icon.innerHTML = success ? "✔" : "✖";
-  icon.style.color = success ? "#0a6624" : "#ff4c4c";
+  icon.style.color = success ? "#00d084" : "#ff4c4c";
+  icon.style.fontSize = "24px";
+  icon.style.marginBottom = "6px";
 
   const text = document.createElement("div");
   text.className = "text";
 
   const popupTitle = document.createElement("h3");
-  popupTitle.className = "title";
   popupTitle.innerText = title;
   popupTitle.style.color = "#ffffff";
+  popupTitle.style.margin = "0";
 
   const popupMessage = document.createElement("p");
-  popupMessage.className = "message";
   popupMessage.innerText = message;
   popupMessage.style.color = "#e0e6ed";
+  popupMessage.style.margin = "6px 0 0 0";
 
   text.appendChild(popupTitle);
   text.appendChild(popupMessage);
   popup.appendChild(icon);
   popup.appendChild(text);
-  document.body.appendChild(popup);
 
-  setTimeout(() => popup.classList.add("show"), 10);
+  popup.style.position = "fixed";
+  popup.style.top = "30px";
+  popup.style.right = "30px";
+  popup.style.backgroundColor = "#002B59";
+  popup.style.padding = "16px 22px";
+  popup.style.borderRadius = "10px";
+  popup.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+  popup.style.opacity = "0";
+  popup.style.transition = "opacity 0.3s ease";
+  popup.style.zIndex = "9999";
+
+  document.body.appendChild(popup);
+  setTimeout(() => (popup.style.opacity = "1"), 10);
+
   setTimeout(() => {
-    popup.classList.remove("show");
-    setTimeout(() => popup.remove(), 300);
+    popup.style.opacity = "0";
+    setTimeout(() => popup.remove(), 400);
   }, 2500);
 }
 
-// 🔹 Adiciona os eventos depois que o DOM for carregado
-document.addEventListener("DOMContentLoaded", () => {
-  const loginBtn = document.getElementById("loginBtn");
-  const verifyBtn = document.getElementById("verifyMfaBtn");
-  const closeBtn = document.getElementById("closeMfaBtn");
-
-  if (loginBtn) loginBtn.addEventListener("click", login);
-  if (verifyBtn) verifyBtn.addEventListener("click", verifyMfa);
-  if (closeBtn) closeBtn.addEventListener("click", closeMfaPopup);
+// 🔹 Eventos após o carregamento do DOM
+window.addEventListener("load", () => {
+  document.getElementById("loginBtn")?.addEventListener("click", login);
+  document.getElementById("verifyMfaBtn")?.addEventListener("click", verifyMfa);
+  document.getElementById("closeMfaBtn")?.addEventListener("click", closeMfaPopup);
 });
