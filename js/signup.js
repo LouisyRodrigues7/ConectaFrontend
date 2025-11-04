@@ -1,5 +1,6 @@
 import { API_URL } from "./api.js";
 
+// 🔹 Função principal de cadastro
 async function signup() {
   const data = {
     name: document.getElementById("name").value.trim(),
@@ -14,7 +15,7 @@ async function signup() {
   }
 
   try {
-    const res = await fetch(`${API_URL}/api/users/signup`, {   // ✅ Corrigido endpoint
+    const res = await fetch(`${API_URL}/api/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -22,10 +23,23 @@ async function signup() {
 
     const result = await res.json();
 
-    if (res.ok && result.qrCodeUrl) {
-      showQRPopup(result.qrCodeUrl);
+    // ✅ Verifica resposta do servidor
+    if (res.ok) {
+      const qrUrl =
+        result.qrCodeUrl ||
+        (result.data && result.data.qrCodeUrl) ||
+        null;
+
+      if (qrUrl) {
+        showQRPopup(qrUrl);
+      } else if (result.success) {
+        showPopup("Sucesso", "Cadastro realizado!", true);
+        setTimeout(() => (window.location.href = "index.html"), 1500);
+      } else {
+        showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
+      }
     } else {
-      showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
+      showPopup("Erro", result.message || "Erro no servidor.", false);
     }
   } catch (error) {
     console.error("Erro no cadastro:", error);
@@ -33,27 +47,30 @@ async function signup() {
   }
 }
 
+// 🔹 Exibe popup com QR Code de autenticação MFA
 function showQRPopup(qrUrl) {
   const popup = document.getElementById("qr-popup");
   const qrImg = document.getElementById("qrPopupImg");
 
   if (!popup || !qrImg) {
-    console.error("Popup de QR Code não encontrado.");
+    console.error("Popup de QR Code não encontrado no HTML.");
     return;
   }
 
   qrImg.src = qrUrl;
-  popup.classList.add("show");
+  popup.style.display = "flex"; // 🔧 garante que o popup apareça corretamente
 
   const closeBtn = document.getElementById("closeQRBtn");
   if (closeBtn) {
     closeBtn.onclick = () => {
-      popup.classList.remove("show");
-      setTimeout(() => (window.location.href = "index.html"), 500);
+      popup.style.display = "none";
+      showPopup("Sucesso", "Conta criada com MFA configurado!", true);
+      setTimeout(() => (window.location.href = "index.html"), 1000);
     };
   }
 }
 
+// 🔹 Pop-up genérico de mensagens
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup";
@@ -89,7 +106,7 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// ✅ Garante que o botão só seja vinculado após o DOM carregar
+// 🔹 Garante que o botão só seja vinculado após o DOM carregar
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("signupBtn");
   if (btn) btn.addEventListener("click", signup);

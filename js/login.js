@@ -1,9 +1,9 @@
 import { API_URL } from "./api.js";
 
+// 🔹 Função principal de login
 async function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
-  const token = document.getElementById("token").value.trim();
 
   if (!email || !password) {
     showPopup("Erro", "Preencha e-mail e senha!", false);
@@ -11,22 +11,28 @@ async function login() {
   }
 
   try {
+    // Envia apenas email e senha no primeiro passo
     const res = await fetch(`${API_URL}/api/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, token }),
+      body: JSON.stringify({ email, password }),
     });
 
     const result = await res.json();
 
+    // 🔸 Caso o backend solicite MFA
+    if (result.message?.includes("MFA") || result.requireToken) {
+      document.getElementById("mfa-popup").style.display = "flex";
+      localStorage.setItem("pendingEmail", email);
+      return;
+    }
+
+    // 🔸 Login comum (sem MFA)
     if (res.ok && result.success) {
       showPopup("Sucesso", "Login realizado com sucesso!", true);
-
       setTimeout(() => {
         window.location.href = "home.html";
       }, 1000);
-    } else if (result.requireToken) {
-      showTokenField();
     } else {
       showPopup("Erro", result.message || "Falha no login.", false);
     }
@@ -36,13 +42,51 @@ async function login() {
   }
 }
 
-function showTokenField() {
-  const tokenField = document.getElementById("tokenField");
-  if (tokenField) {
-    tokenField.style.display = "block";
+// 🔹 Função para verificar o código MFA
+async function verifyMfa() {
+  const email = localStorage.getItem("pendingEmail");
+  const token = document.getElementById("token").value.trim();
+
+  if (!token) {
+    showPopup("Erro", "Digite o código MFA!", false);
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/api/users/verify-mfa`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, token }),
+    });
+
+    const result = await res.json();
+
+    if (res.ok && result.success) {
+      showPopup("Sucesso", "MFA verificado com sucesso!", true);
+      localStorage.removeItem("pendingEmail");
+
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 1000);
+    } else {
+      showPopup("Erro", result.message || "Código MFA inválido.", false);
+    }
+  } catch (error) {
+    console.error("Erro ao verificar MFA:", error);
+    showPopup("Erro", "Falha ao verificar MFA.", false);
   }
 }
 
+// 🔹 Fecha o pop-up de MFA
+function closeMfaPopup() {
+  const popup = document.getElementById("mfa-popup");
+  if (popup) {
+    popup.style.display = "none";
+    document.getElementById("token").value = "";
+  }
+}
+
+// 🔹 Exibe um pop-up de status (sucesso/erro)
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup";
@@ -78,8 +122,13 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// 🔧 Garante que o evento seja adicionado após o carregamento do DOM
+// 🔹 Adiciona os eventos depois que o DOM for carregado
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("loginBtn");
-  if (btn) btn.addEventListener("click", login);
+  const loginBtn = document.getElementById("loginBtn");
+  const verifyBtn = document.getElementById("verifyMfaBtn");
+  const closeBtn = document.getElementById("closeMfaBtn");
+
+  if (loginBtn) loginBtn.addEventListener("click", login);
+  if (verifyBtn) verifyBtn.addEventListener("click", verifyMfa);
+  if (closeBtn) closeBtn.addEventListener("click", closeMfaPopup);
 });
