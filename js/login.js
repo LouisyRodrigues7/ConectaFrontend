@@ -1,4 +1,3 @@
-// js/login.js
 import { API_URL } from "./api.js";
 
 let pendingEmail = null;
@@ -42,36 +41,29 @@ async function login() {
       body: JSON.stringify({ email, password }),
     });
 
-    let result;
-    try {
-      result = await res.json();
-    } catch (errJson) {
-      console.error("❌ Não foi possível ler JSON da resposta:", errJson);
-      showPopup("Erro", "Resposta inválida do servidor.", false);
-      return;
-    }
-
+    const result = await res.json();
     console.log("🔍 Resposta do servidor:", result, "status:", res.status);
 
-    if (result.requireToken || (result.message && result.message.toLowerCase().includes("mfa"))) {
-      console.log("🟢 Requer MFA — abrindo popup");
+    // ✅ Se o back pedir MFA
+    if (res.ok && result.requireToken) {
+      console.log("🟢 Login requer MFA — exibindo popup");
       pendingEmail = email;
       localStorage.setItem("pendingEmail", email);
       openMfaPopup();
       return;
     }
 
-    if (res.ok && (result.success || result.token)) {
-      console.log("✅ Login bem-sucedido (sem MFA).");
+    // ✅ Login sem MFA
+    if (res.ok && result.success && !result.requireToken) {
       showPopup("Sucesso", result.message || "Login realizado com sucesso!", true);
-      setTimeout(() => (window.location.href = "home.html"), 900);
+      setTimeout(() => (window.location.href = "home.html"), 1000);
       return;
     }
 
-    console.warn("⚠️ Login falhou:", result);
+    // ❌ Falha de login
     showPopup("Erro", result.message || "Falha no login. Verifique suas credenciais.", false);
   } catch (error) {
-    console.error("❌ Erro no login (fetch):", error);
+    console.error("❌ Erro no login:", error);
     showPopup("Erro", "Não foi possível conectar ao servidor.", false);
   } finally {
     isRequesting = false;
@@ -83,44 +75,33 @@ async function login() {
   }
 }
 
-// Abre o popup MFA (garante query dos elementos no momento)
+// ✅ Abre o popup MFA
 function openMfaPopup() {
   const mfaPopup = document.getElementById("mfa-popup");
   const tokenInput = document.getElementById("token");
-  if (!mfaPopup) {
-    console.error("❌ Elemento #mfa-popup não encontrado no DOM");
-    return;
-  }
+  if (!mfaPopup) return console.error("❌ Elemento #mfa-popup não encontrado no DOM");
   mfaPopup.style.display = "flex";
-  mfaPopup.style.alignItems = "center";
-  mfaPopup.style.justifyContent = "center";
-  mfaPopup.classList.add("visible");
-  if (tokenInput) {
-    tokenInput.value = "";
-    setTimeout(() => tokenInput.focus(), 120);
-  }
+  tokenInput.value = "";
+  setTimeout(() => tokenInput.focus(), 200);
 }
 
-// Fecha o popup MFA
+// ✅ Fecha o popup MFA
 function closeMfaPopup() {
   const mfaPopup = document.getElementById("mfa-popup");
-  const tokenInput = document.getElementById("token");
   if (!mfaPopup) return;
   mfaPopup.style.display = "none";
-  mfaPopup.classList.remove("visible");
-  if (tokenInput) tokenInput.value = "";
   pendingEmail = null;
   localStorage.removeItem("pendingEmail");
 }
 
-// Verifica o código MFA
+// ✅ Envia token MFA ao back
 async function verifyMfa() {
   const email = pendingEmail || localStorage.getItem("pendingEmail");
   const tokenInput = document.getElementById("token");
-  const token = tokenInput ? tokenInput.value.trim() : "";
+  const token = tokenInput?.value.trim();
 
   if (!email) {
-    showPopup("Erro", "Email pendente não encontrado. Refazer login.", false);
+    showPopup("Erro", "E-mail não encontrado. Refazer login.", false);
     closeMfaPopup();
     return;
   }
@@ -131,6 +112,7 @@ async function verifyMfa() {
   }
 
   const verifyBtn = document.getElementById("verifyMfaBtn");
+
   try {
     if (verifyBtn) verifyBtn.disabled = true;
     console.log("➡️ Enviando POST /verify-mfa para", `${API_URL}/api/users/verify-mfa`);
@@ -141,15 +123,15 @@ async function verifyMfa() {
     });
 
     const result = await res.json();
-    console.log("🔍 Resposta verificação MFA:", result, "status:", res.status);
+    console.log("🔍 Resposta verificação MFA:", result);
 
-    if (res.ok && (result.success || result.token || result.message?.toLowerCase().includes("login"))) {
-      showPopup("Sucesso", result.message || "MFA verificado com sucesso!", true);
+    if (res.ok && result.success) {
+      showPopup("Sucesso", "MFA verificado com sucesso!", true);
       localStorage.removeItem("pendingEmail");
       setTimeout(() => {
         closeMfaPopup();
         window.location.href = "home.html";
-      }, 800);
+      }, 1000);
       return;
     }
 
@@ -162,16 +144,15 @@ async function verifyMfa() {
   }
 }
 
-// Popups de status (visual)
+// ✅ Popup visual
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup-message";
-  // estilo inline simples para garantir visibilidade
   Object.assign(popup.style, {
     position: "fixed",
     top: "22px",
     right: "22px",
-    backgroundColor: "#002B59",
+    backgroundColor: success ? "#0c5" : "#c33",
     padding: "12px 16px",
     borderRadius: "10px",
     color: "#fff",
@@ -179,31 +160,21 @@ function showPopup(title, message, success = true) {
     opacity: "0",
     transition: "opacity 0.25s",
   });
-
-  popup.innerHTML = `<div style="font-size:18px;margin-bottom:6px">${success ? "✔" : "✖"}</div>
-    <div><strong style="display:block;margin-bottom:6px">${title}</strong><div>${message}</div></div>`;
-
+  popup.innerHTML = `<strong>${title}</strong><br>${message}`;
   document.body.appendChild(popup);
-  setTimeout(() => (popup.style.opacity = "1"), 20);
+  setTimeout(() => (popup.style.opacity = "1"), 30);
   setTimeout(() => {
     popup.style.opacity = "0";
-    setTimeout(() => popup.remove(), 700);
+    setTimeout(() => popup.remove(), 500);
   }, 2500);
 }
 
-// Bind de eventos — faz queries no momento do bind para garantir elementos
+// ✅ Eventos
 function bindEvents() {
-  const loginBtn = document.getElementById("loginBtn");
-  const verifyMfaBtn = document.getElementById("verifyMfaBtn");
-  const closeMfaBtn = document.getElementById("closeMfaBtn");
-
-  if (loginBtn) loginBtn.onclick = login;
-  if (verifyMfaBtn) verifyMfaBtn.onclick = verifyMfa;
-  if (closeMfaBtn) closeMfaBtn.onclick = closeMfaPopup;
-  console.log("🔗 Eventos vinculados: loginBtn, verifyMfaBtn, closeMfaBtn");
+  document.getElementById("loginBtn")?.addEventListener("click", login);
+  document.getElementById("verifyMfaBtn")?.addEventListener("click", verifyMfa);
+  document.getElementById("closeMfaBtn")?.addEventListener("click", closeMfaPopup);
+  console.log("🔗 Eventos vinculados");
 }
 
-window.addEventListener("load", () => {
-  console.log("📄 login.js carregado");
-  bindEvents();
-});
+window.addEventListener("load", bindEvents);
