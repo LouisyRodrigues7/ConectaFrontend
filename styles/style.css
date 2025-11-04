@@ -175,3 +175,96 @@
   body:not(.dark-mode) #moonIcon {
       opacity: 0;
   }
+
+  /* --- Modal MFA fixo centralizado --- */
+#mfa-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 19, 36, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* --- Caixa branca central --- */
+#mfa-popup .text {
+  background-color: #1f1e33;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: #ffffff;
+  max-width: 320px;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* --- Ícone e texto --- */
+#mfa-popup .icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+#mfa-popup .title {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+#mfa-popup .message {
+  color: #d1d5db;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+#mfa-popup input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 180px;
+  text-align: center;
+  font-size: 16px;
+}
+
+#mfa-popup button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#verifyMfaBtn {
+  background-color: #002b59;
+  color: white;
+}
+
+#closeMfaBtn {
+  background-color: #999;
+  color: white;
+  margin-left: 8px;
+}
+
+#verifyMfaBtn:hover {
+  background-color: #004080;
+}
+
+#closeMfaBtn:hover {
+  background-color: #777;
+}
+
+/* Animação de entrada */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
