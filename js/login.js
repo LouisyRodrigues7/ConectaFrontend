@@ -63,7 +63,7 @@ async function verifyMfa() {
     if (res.ok && result.success) {
       showPopup("Sucesso", "MFA verificado com sucesso!", true);
       closeMfaPopup();
-      setTimeout(() => (window.location.href = "home.html"), 1000);
+      setTimeout(() => (window.location.href = "dashboard.html"), 1000);
     } else {
       showPopup("Erro", result.message || "Código inválido.", false);
     }
