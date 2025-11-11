@@ -2,7 +2,7 @@ import { API_URL } from "./api.js";
 
 let pendingEmail = null;
 
-// 🔐 Função principal de login
+// Função principal de login
 async function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -23,7 +23,7 @@ async function login() {
     console.log("🔍 Resposta do servidor:", result);
 
     if (res.ok && result.requireToken) {
-      // Requer MFA
+      // Requer MFA (Auth ou e-mail)
       pendingEmail = email;
       openMfaPopup();
       return;
@@ -31,7 +31,7 @@ async function login() {
 
     if (res.ok && result.success) {
       showPopup("Sucesso", "Login realizado com sucesso!", true);
-      setTimeout(() => (window.location.href = "dashboard.html"), 1000);
+      setTimeout(() => (window.location.href = "dashboard.html"), 1000); // Redireciona após 1.5 segundos
       return;
     }
 
@@ -42,7 +42,7 @@ async function login() {
   }
 }
 
-// 🔐 Verifica o código MFA
+// Verifica o código MFA (Authenticator ou código por e-mail)
 async function verifyMfa() {
   const token = document.getElementById("token").value.trim();
   if (!pendingEmail || !token) {
@@ -63,7 +63,7 @@ async function verifyMfa() {
     if (res.ok && result.success) {
       showPopup("Sucesso", "MFA verificado com sucesso!", true);
       closeMfaPopup();
-      setTimeout(() => (window.location.href = "dashboard.html"), 1000);
+      setTimeout(() => (window.location.href = "dashboard.html"), 1000); // Redireciona após 1.5 segundos
     } else {
       showPopup("Erro", result.message || "Código inválido.", false);
     }
@@ -73,7 +73,7 @@ async function verifyMfa() {
   }
 }
 
-// 🪟 Abre popup MFA
+// Abre o popup MFA
 function openMfaPopup() {
   const popup = document.getElementById("mfa-popup");
   if (popup) {
@@ -81,7 +81,7 @@ function openMfaPopup() {
   }
 }
 
-// ❌ Fecha popup MFA
+// Fecha o popup MFA
 function closeMfaPopup() {
   const popup = document.getElementById("mfa-popup");
   if (popup) {
@@ -89,7 +89,7 @@ function closeMfaPopup() {
   }
 }
 
-// ✅ Popup visual padrão
+// Função para mostrar o popup de mensagem
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup-message";
@@ -115,7 +115,7 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// ⚙️ Eventos
+// Vínculo do evento de login e MFA no DOM
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loginBtn")?.addEventListener("click", login);
   document.getElementById("verifyMfaBtn")?.addEventListener("click", verifyMfa);

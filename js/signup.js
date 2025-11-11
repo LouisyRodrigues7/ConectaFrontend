@@ -25,16 +25,9 @@ async function signup() {
 
     // ✅ Verifica resposta do servidor
     if (res.ok) {
-      const qrUrl =
-        result.qrCodeUrl ||
-        (result.data && result.data.qrCodeUrl) ||
-        null;
-
-      if (qrUrl) {
-        showQRPopup(qrUrl);
-      } else if (result.success) {
-        showPopup("Sucesso", "Cadastro realizado!", true);
-        setTimeout(() => (window.location.href = "index.html"), 1500);
+      if (result.success) {
+        showPopup("Sucesso", "Cadastro realizado! Verifique seu e-mail para o QR code de MFA.", true);
+        setTimeout(() => (window.location.href = "index.html"), 1500); // Redireciona após 1.5 segundos
       } else {
         showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
       }
@@ -44,29 +37,6 @@ async function signup() {
   } catch (error) {
     console.error("Erro no cadastro:", error);
     showPopup("Erro", "Não foi possível conectar ao servidor.", false);
-  }
-}
-
-// 🔹 Exibe popup com QR Code de autenticação MFA
-function showQRPopup(qrUrl) {
-  const popup = document.getElementById("qr-popup");
-  const qrImg = document.getElementById("qrPopupImg");
-
-  if (!popup || !qrImg) {
-    console.error("Popup de QR Code não encontrado no HTML.");
-    return;
-  }
-
-  qrImg.src = qrUrl;
-  popup.style.display = "flex"; // 🔧 garante que o popup apareça corretamente
-
-  const closeBtn = document.getElementById("closeQRBtn");
-  if (closeBtn) {
-    closeBtn.onclick = () => {
-      popup.style.display = "none";
-      showPopup("Sucesso", "Conta criada com MFA configurado!", true);
-      setTimeout(() => (window.location.href = "index.html"), 1000);
-    };
   }
 }
 
