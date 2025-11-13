@@ -2,7 +2,7 @@ import { API_URL } from "./api.js";
 
 let pendingEmail = null;
 
-// Função principal de login
+// 🔐 Função principal de login
 async function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -22,15 +22,14 @@ async function login() {
     const result = await res.json();
     console.log("🔍 Resposta do servidor:", result);
 
-    if (res.ok && result.success && result.requireMfa) {
-      // Login correto, mas precisa do código MFA
+    if (res.ok && result.requireToken) {
+      // Requer MFA
       pendingEmail = email;
       openMfaPopup();
       return;
     }
 
-    if (res.ok && result.success && !result.requireMfa) {
-      // Login completo sem MFA (raro, mas suportado)
+    if (res.ok && result.success) {
       showPopup("Sucesso", "Login realizado com sucesso!", true);
       setTimeout(() => (window.location.href = "dashboard.html"), 1000);
       return;
@@ -43,10 +42,9 @@ async function login() {
   }
 }
 
-// Verifica o código MFA
+// 🔐 Verifica o código MFA
 async function verifyMfa() {
   const token = document.getElementById("token").value.trim();
-
   if (!pendingEmail || !token) {
     showPopup("Erro", "Digite o código MFA!", false);
     return;
@@ -75,19 +73,23 @@ async function verifyMfa() {
   }
 }
 
-// Abre o popup MFA
+// 🪟 Abre popup MFA
 function openMfaPopup() {
   const popup = document.getElementById("mfa-popup");
-  if (popup) popup.style.display = "flex";
+  if (popup) {
+    popup.style.display = "flex";
+  }
 }
 
-// Fecha o popup MFA
+// ❌ Fecha popup MFA
 function closeMfaPopup() {
   const popup = document.getElementById("mfa-popup");
-  if (popup) popup.style.display = "none";
+  if (popup) {
+    popup.style.display = "none";
+  }
 }
 
-// Exibe popup temporário
+// ✅ Popup visual padrão
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup-message";
@@ -113,7 +115,7 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// Eventos do DOM
+// ⚙️ Eventos
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loginBtn")?.addEventListener("click", login);
   document.getElementById("verifyMfaBtn")?.addEventListener("click", verifyMfa);

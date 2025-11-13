@@ -1,6 +1,5 @@
 import { API_URL } from "./api.js";
 
-// ALOU
 // 🔹 Função principal de cadastro
 async function signup() {
   const data = {
@@ -22,33 +21,56 @@ async function signup() {
       body: JSON.stringify(data),
     });
 
-    // 🔸 Lê o corpo da resposta em texto e tenta converter pra JSON
-    const resultText = await res.text();
-    let result;
-    try {
-      result = JSON.parse(resultText);
-    } catch {
-      result = { message: resultText };
-    }
+    const result = await res.json();
 
-    console.log("📩 Resposta do servidor:", res.status, result);
+    // ✅ Verifica resposta do servidor
+    if (res.ok) {
+      const qrUrl =
+        result.qrCodeUrl ||
+        (result.data && result.data.qrCodeUrl) ||
+        null;
 
-    // ✅ Considera qualquer 2xx (200, 201, etc) como sucesso
-    if (res.status >= 200 && res.status < 300) {
-      const msg =
-        result.message ||
-        "Usuário cadastrado com sucesso! Verifique seu e-mail para o QR Code de autenticação.";
-      showSuccessPopup(msg);
+      if (qrUrl) {
+        showQRPopup(qrUrl);
+      } else if (result.success) {
+        showPopup("Sucesso", "Cadastro realizado!", true);
+        setTimeout(() => (window.location.href = "index.html"), 1500);
+      } else {
+        showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
+      }
     } else {
-      showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
+      showPopup("Erro", result.message || "Erro no servidor.", false);
     }
   } catch (error) {
-    console.error("❌ Erro no cadastro:", error);
+    console.error("Erro no cadastro:", error);
     showPopup("Erro", "Não foi possível conectar ao servidor.", false);
   }
 }
 
-// 🔹 Pop-up genérico (mensagens rápidas)
+// 🔹 Exibe popup com QR Code de autenticação MFA
+function showQRPopup(qrUrl) {
+  const popup = document.getElementById("qr-popup");
+  const qrImg = document.getElementById("qrPopupImg");
+
+  if (!popup || !qrImg) {
+    console.error("Popup de QR Code não encontrado no HTML.");
+    return;
+  }
+
+  qrImg.src = qrUrl;
+  popup.style.display = "flex"; // 🔧 garante que o popup apareça corretamente
+
+  const closeBtn = document.getElementById("closeQRBtn");
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      popup.style.display = "none";
+      showPopup("Sucesso", "Conta criada com MFA configurado!", true);
+      setTimeout(() => (window.location.href = "index.html"), 1000);
+    };
+  }
+}
+
+// 🔹 Pop-up genérico de mensagens
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup";
@@ -62,10 +84,12 @@ function showPopup(title, message, success = true) {
   text.className = "text";
 
   const popupTitle = document.createElement("h3");
+  popupTitle.className = "title";
   popupTitle.innerText = title;
   popupTitle.style.color = "#ffffff";
 
   const popupMessage = document.createElement("p");
+  popupMessage.className = "message";
   popupMessage.innerText = message;
   popupMessage.style.color = "#e0e6ed";
 
@@ -82,27 +106,7 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// 🔹 Popup de sucesso (mostra após cadastro e envio de e-mail)
-function showSuccessPopup(customMessage) {
-  const popup = document.getElementById("success-popup");
-  if (popup) {
-    popup.style.display = "flex";
-    const messageElement = popup.querySelector("p");
-    if (customMessage && messageElement) messageElement.innerText = customMessage;
-
-    const closeBtn = document.getElementById("closeSuccessBtn");
-    if (closeBtn) {
-      closeBtn.onclick = () => {
-        popup.style.display = "none";
-        window.location.href = "index.html"; // volta pro login
-      };
-    }
-  } else {
-    showPopup("Sucesso", customMessage || "Usuário cadastrado com sucesso!", true);
-  }
-}
-
-// 🔹 Garante que o botão seja vinculado após o DOM carregar
+// 🔹 Garante que o botão só seja vinculado após o DOM carregar
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("signupBtn");
   if (btn) btn.addEventListener("click", signup);
