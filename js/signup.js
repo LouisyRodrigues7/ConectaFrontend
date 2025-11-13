@@ -22,9 +22,12 @@ async function signup() {
 
     const result = await res.json();
 
-    if (res.ok && result.success) {
-      // 🔹 Mostra popup explicando o novo fluxo
-      showSuccessPopup();
+    if (res.status >= 200 && res.status < 300) {
+      if (result.success) {
+        showSuccessPopup();
+      } else {
+        showPopup("Sucesso", result.message || "Usuário cadastrado com sucesso! Verifique seu e-mail.", true);
+      }
     } else {
       showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
     }
@@ -34,7 +37,6 @@ async function signup() {
   }
 }
 
-// 🔹 Pop-up genérico (mensagens rápidas)
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup";
@@ -65,7 +67,6 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// 🔹 Novo popup explicando o fluxo de verificação
 function showSuccessPopup() {
   const popup = document.getElementById("success-popup");
   if (popup) {
