@@ -1,6 +1,5 @@
 import { API_URL } from "./api.js";
 
-// 🔹 Função principal de cadastro
 async function signup() {
   const data = {
     name: document.getElementById("name").value.trim(),
@@ -23,16 +22,11 @@ async function signup() {
 
     const result = await res.json();
 
-    // ✅ Verifica resposta do servidor
-    if (res.ok) {
-      if (result.success) {
-        showPopup("Sucesso", "Cadastro realizado! Verifique seu e-mail para o QR code de MFA.", true);
-        setTimeout(() => (window.location.href = "index.html"), 1500); // Redireciona após 1.5 segundos
-      } else {
-        showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
-      }
+    if (res.ok && result.success) {
+      // 🔹 Mostra popup explicando o novo fluxo
+      showSuccessPopup();
     } else {
-      showPopup("Erro", result.message || "Erro no servidor.", false);
+      showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
     }
   } catch (error) {
     console.error("Erro no cadastro:", error);
@@ -40,7 +34,7 @@ async function signup() {
   }
 }
 
-// 🔹 Pop-up genérico de mensagens
+// 🔹 Pop-up genérico (mensagens rápidas)
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = "popup";
@@ -54,14 +48,9 @@ function showPopup(title, message, success = true) {
   text.className = "text";
 
   const popupTitle = document.createElement("h3");
-  popupTitle.className = "title";
   popupTitle.innerText = title;
-  popupTitle.style.color = "#ffffff";
-
   const popupMessage = document.createElement("p");
-  popupMessage.className = "message";
   popupMessage.innerText = message;
-  popupMessage.style.color = "#e0e6ed";
 
   text.appendChild(popupTitle);
   text.appendChild(popupMessage);
@@ -76,7 +65,23 @@ function showPopup(title, message, success = true) {
   }, 2500);
 }
 
-// 🔹 Garante que o botão só seja vinculado após o DOM carregar
+// 🔹 Novo popup explicando o fluxo de verificação
+function showSuccessPopup() {
+  const popup = document.getElementById("success-popup");
+  if (popup) {
+    popup.style.display = "flex";
+    const closeBtn = document.getElementById("closeSuccessBtn");
+    if (closeBtn) {
+      closeBtn.onclick = () => {
+        popup.style.display = "none";
+        window.location.href = "index.html"; // volta pro login
+      };
+    }
+  } else {
+    showPopup("Sucesso", "Usuário cadastrado. Verifique seu e-mail!", true);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("signupBtn");
   if (btn) btn.addEventListener("click", signup);
