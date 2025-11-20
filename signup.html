@@ -5,44 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro - ConectaBus</title>
 
-  <link rel="stylesheet" href="styles/auth.css" />
+    <!-- Fonte Sora -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/cadastro.css" />
 
   <!-- Importa o script como módulo e com defer -->
   <script type="module" src="js/signup.js" defer></script>
 </head>
 
 <body>
-  <div class="container">
-    <!-- LADO ESQUERDO -->
+<div class="container">
+  <div class="center-box">
+    
+    <!-- LOGO -->
+    <div class="logo-side">
+      <img src="assets/Logo ConectaBus (1).svg" alt="Logo ConectaBus" class="logo" />
+    </div>
+
+    <!-- FORMULÁRIO DE CADASTRO -->
     <div class="login-side">
       <div class="login-box">
-        <h2>Bem-vindo ao ConectaBus</h2>
+        <p class="title">Bem-vindo ao <strong>ConectaBus</strong></p>
         <p class="subtitle">Crie sua conta</p>
 
-        <input id="name" placeholder="Nome completo" /><br />
-        <input id="email" placeholder="E-mail" /><br />
-        <input id="password" type="password" placeholder="Senha" /><br />
+        <input type="name" placeholder="Nome completo:" class="input-field" /><br />
+        <input type="email" placeholder="E-mail:" class="input-field" /><br />
+        <input type="password" placeholder="Senha:" class="input-field" /><br />
 
-        <label>Tipo de usuário:</label>
-        <select id="userType">
+        <label class="userTitle">Tipo de usuário:</label>
+        <select class="userType">
           <option value="Estudante">Estudante</option>
           <option value="Governo">Governo</option>
           <option value="Cidadão">Cidadão</option>
         </select><br /><br />
 
-        <button id="signupBtn">Cadastrar</button>
+        <button class="signupBtn">Cadastrar</button>
 
         <p class="signup-text">
-          Já tem uma conta? <a href="index.html">Entrar</a>
+          Já tem uma conta? 
+          <a href="index.html"><b>Entrar</b></a>
         </p>
       </div>
     </div>
 
-    <!-- LADO DIREITO -->
-    <div class="logo-side">
-      <img src="assets/logo_conectabus.png" alt="Logo ConectaBus" class="logo" />
-    </div>
   </div>
+</div>
+
 
   <!-- POPUP QR CODE -->
   <div id="qr-popup" class="mfa-popup" style="display:none;">

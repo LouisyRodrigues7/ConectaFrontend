@@ -1,4 +1,4 @@
-/* Fundo escuro da página */
+/*CADASTRO */
 body {
     margin: 0;
     background-color: #0D1321;
@@ -9,16 +9,6 @@ body {
     align-items: center;
 }
 
-/* Container principal */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-}
-
-/* Card azul claro central */
 .center-box {
     background: #BDEDFF;
     padding: 45px 55px;
@@ -28,23 +18,28 @@ body {
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.25);
 }
 
-/* Logo */
-.logo-img {
+.logos-side{
     width: 75px;
-    margin-bottom: 8px;
 }
 
-/* Título */
+.login-box {
+    color: black
+}
+
 .title {
     font-family: 'Sora', sans-serif;
     color: #000;
-    font-size: 16px;
-    margin-top: 0px;
+    font-size: 20px;
+    margin-top: 20px;
     margin-bottom: 5px;
     line-height: 1.4;
 }
 
-/* Inputs iguais ao PNG */
+.subtitle {
+    font-size: 16px;
+    color: #000;
+}
+
 .input-field {
     font-family: 'Sora', sans-serif;
     width: 90%;
@@ -54,7 +49,7 @@ body {
     background: #BDEDFF;
     border: 1px solid #7D7D7D;
     font-size: 14px;
-    color: black;
+    color: black ;
 }
 
 .input-field::placeholder {
@@ -62,11 +57,25 @@ body {
     opacity: 1;
 }
 
-/* Botão */
-.btn {
+.userTitle {
+    font-size: 15px;
+    color: #000;
+}
+
+.userType{
+    font-family: 'Sora', sans-serif;
+    width: 30%;
+    margin-top: 25px;
+    background: linear-gradient(90deg, #0D1321 0%, #053B8A 100%);
+    color: white;
+    background-color: #053B8A;
+    border-radius: 5px;
+}
+
+.signupBtn{
     font-family: 'Sora', sans-serif;
     width: 100%;
-    margin-top: 32px;
+    margin-top: 5px;
     padding: 14px;
     background: linear-gradient(90deg, #0D1321 0%, #053B8A 100%);
     border: none;
@@ -77,19 +86,13 @@ body {
     transition: 0.3s;
 }
 
-.btn:hover {
-    opacity: 0.9;
-}
-
-/* Texto de cadastro */
 .signup-text {
-    font-family: 'Sora', sans-serif;
-    margin-top: 15px;
-    margin-bottom: 30px;
-    font-size: 14px;
-}
-
-.signup-text a {
+    margin-top: 18px;
     color: #000;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+.signup-text a {
     text-decoration: underline;
+    color: #000;
 }
