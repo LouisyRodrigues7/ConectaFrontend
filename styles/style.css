@@ -121,13 +121,10 @@
   
   .charts {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: 30px;
     padding: 0 20px 40px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
+  }
   
   .chart-container {
     background: var(--chart-bg);

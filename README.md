@@ -110,8 +110,7 @@ Se o login não redirecionar corretamente:
 ## 👨‍💻 Autor
 
 **ConectaBus Frontend**  
-Desenvolvido pela equipe do ConectaBus 
+Desenvolvido por **Louisy Marcelle**  
 📅 Atualizado em **Novembro de 2025**  
 🌐 Hospedagem: [Netlify](https://www.netlify.com/)  
 🔗 Backend: [Render](https://render.com/)
-
