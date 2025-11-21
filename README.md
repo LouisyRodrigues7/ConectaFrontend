@@ -115,3 +115,57 @@ Desenvolvido pela equipe do ConectaBus
 🌐 Hospedagem: [Netlify](https://www.netlify.com/)  
 🔗 Backend: [Render](https://render.com/)
 
+## 🤝 Equipe
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/LouisyRodrigues" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/181038308?v=4" width="100px;" alt="Louisy Rodrigues Picture"/><br>
+        <sub>
+          <b>Louisy Rodrigues</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/RihanCabral" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/163031225?v=4" width="100px;" alt="Rihan Cabral Picture"/><br>
+        <sub>
+          <b>Rihan Cabral</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/VictorLavor" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/150476865?v=4" width="100px;" alt="VictorLavor Picture"/><br>
+        <sub>
+          <b>Victor Lavor</b>
+        </sub>
+      </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/AndreMaurilioDEV" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/117940329?v=4" width="100px;" alt="André Maurilio Picture"/><br>
+        <sub>
+          <b>André Maurilio</b>
+        </sub>
+      </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/guilherme-jacques" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/163030792?v=4" width="100px;" alt="Guilherme Jacques Picture"/><br>
+        <sub>
+          <b>Guilherme Jacques</b>
+        </sub>
+      </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/oedumelo" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/161795563?v=4" width="100px;" alt="Eduardo Melo Picture"/><br>
+        <sub>
+          <b>Eduardo Melo</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
