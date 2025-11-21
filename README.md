@@ -137,21 +137,13 @@ Desenvolvido pela equipe do ConectaBus
     </td>
     <td align="center">
       <a href="https://github.com/VictorLavor" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/150476865?v=4" width="100px;" alt="VictorLavor Picture"/><br>
+        <img src="https://avatars.githubusercontent.com/u/150476865?v=4" width="100px;" alt="Victor Lavor Picture"/><br>
         <sub>
           <b>Victor Lavor</b>
         </sub>
       </a>
     </td>
-     <td align="center">
-      <a href="https://github.com/AndreMaurilioDEV" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/117940329?v=4" width="100px;" alt="André Maurilio Picture"/><br>
-        <sub>
-          <b>André Maurilio</b>
-        </sub>
-      </a>
-    </td>
-     <td align="center">
+    <td align="center">
       <a href="https://github.com/guilherme-jacques" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/163030792?v=4" width="100px;" alt="Guilherme Jacques Picture"/><br>
         <sub>
@@ -159,7 +151,7 @@ Desenvolvido pela equipe do ConectaBus
         </sub>
       </a>
     </td>
-     <td align="center">
+    <td align="center">
       <a href="https://github.com/oedumelo" target="_blank">
         <img src="https://avatars.githubusercontent.com/u/161795563?v=4" width="100px;" alt="Eduardo Melo Picture"/><br>
         <sub>
