@@ -144,10 +144,10 @@ Desenvolvido pela equipe do ConectaBus
       </a>
     </td>
      <td align="center">
-      <a href="https://github.com/AndreMaurilioDEV" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/117940329?v=4" width="100px;" alt="André Maurilio Picture"/><br>
+      <a href=>
+        <img src=/><br>
         <sub>
-          <b>André Maurilio</b>
+          <b></b>
         </sub>
       </a>
     </td>
@@ -168,4 +168,5 @@ Desenvolvido pela equipe do ConectaBus
       </a>
     </td>
   </tr>
+
 </table>
