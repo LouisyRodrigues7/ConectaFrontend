@@ -1,6 +1,6 @@
 import { API_URL } from "./api.js";
 
-// 🔹 Função principal de cadastro
+// Função principal de cadastro
 async function signup() {
   const data = {
     name: document.getElementById("name").value.trim(),
@@ -9,20 +9,20 @@ async function signup() {
     userType: document.getElementById("userType").value,
   };
 
-  // 🔹 Verifica campos vazios
+  // Verifica campos vazios
   if (!data.name || !data.email || !data.password) {
     showPopup("Erro", "Preencha todos os campos!", false);
     return;
   }
 
-  // 🔍 Validação de email
+  // Validação de email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(data.email)) {
     showPopup("Erro", "Digite um e-mail válido (ex: exemplo@gmail.com)", false);
     return;
   }
 
-  // 🔐 Validação de senha forte
+  // Validação de senha forte
   const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
   if (!senhaRegex.test(data.password)) {
     showPopup(
@@ -65,8 +65,7 @@ async function signup() {
   }
 }
 
-
-// 🔹 Exibe popup com QR Code de autenticação MFA
+// Exibe popup com QR Code de autenticação MFA
 function showQRPopup(qrUrl) {
   const popup = document.getElementById("qr-popup");
   const qrImg = document.getElementById("qrPopupImg");
@@ -77,7 +76,7 @@ function showQRPopup(qrUrl) {
   }
 
   qrImg.src = qrUrl;
-  popup.style.display = "flex"; // 🔧 garante que o popup apareça corretamente
+  popup.style.display = "flex";
 
   const closeBtn = document.getElementById("closeQRBtn");
   if (closeBtn) {
@@ -89,15 +88,16 @@ function showQRPopup(qrUrl) {
   }
 }
 
-// 🔹 Pop-up genérico de mensagens
+// Popup genérico estilizado
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
-  popup.className = "popup";
+
+
+  popup.className = success ? "popup success" : "popup error";
 
   const icon = document.createElement("div");
   icon.className = "icon";
   icon.innerHTML = success ? "✔" : "✖";
-  icon.style.color = success ? "#0a6624" : "#ff4c4c";
 
   const text = document.createElement("div");
   text.className = "text";
@@ -105,27 +105,28 @@ function showPopup(title, message, success = true) {
   const popupTitle = document.createElement("h3");
   popupTitle.className = "title";
   popupTitle.innerText = title;
-  popupTitle.style.color = "#ffffff";
 
   const popupMessage = document.createElement("p");
   popupMessage.className = "message";
   popupMessage.innerText = message;
-  popupMessage.style.color = "#e0e6ed";
 
   text.appendChild(popupTitle);
   text.appendChild(popupMessage);
+
   popup.appendChild(icon);
   popup.appendChild(text);
+
   document.body.appendChild(popup);
 
   setTimeout(() => popup.classList.add("show"), 10);
+
   setTimeout(() => {
     popup.classList.remove("show");
     setTimeout(() => popup.remove(), 300);
   }, 2500);
 }
 
-// 🔹 Garante que o botão só seja vinculado após o DOM carregar
+// Garante que o botão só seja vinculado após o DOM carregar
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("signupBtn");
   if (btn) btn.addEventListener("click", signup);

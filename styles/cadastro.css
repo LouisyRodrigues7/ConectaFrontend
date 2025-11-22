@@ -1,4 +1,4 @@
-/*CADASTRO */
+/* CADASTRO */
 body {
     margin: 0;
     background-color: #0D1321;
@@ -18,7 +18,7 @@ body {
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.25);
 }
 
-.logos-side{
+.logos-side {
     width: 75px;
 }
 
@@ -62,17 +62,16 @@ body {
     color: #000;
 }
 
-.userType{
+.userType {
     font-family: 'Sora', sans-serif;
     width: 30%;
     margin-top: 25px;
     background: linear-gradient(90deg, #0D1321 0%, #053B8A 100%);
     color: white;
-    background-color: #053B8A;
     border-radius: 5px;
 }
 
-.signupBtn{
+.signupBtn {
     font-family: 'Sora', sans-serif;
     width: 100%;
     margin-top: 5px;
@@ -98,39 +97,41 @@ body {
     color: #000;
 }
 
-
-/* POPUP*/
+/* POPUP */
 .popup {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.85);
-    background: #0D1321; /* Azul mais escuro do seu layout */
+    background: #0D1321;
     padding: 20px 24px;
-    border-radius: 8px;   /* 🔹 Mais quadradinho */
+    border-radius: 8px;
     display: flex;
     gap: 15px;
     align-items: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-    border-left: 6px solid #0a6624; /* Verde existente */
     opacity: 0;
     z-index: 9999;
     width: 300px;
     max-width: 90%;
     transition: opacity 0.35s ease, transform 0.35s ease;
+    border-left: 6px solid #0a6624; 
 }
 
+/* ANIMAÇÃO */
 .popup.show {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
 }
 
+/* ÍCONE */
 .popup .icon {
     font-size: 26px;
     font-weight: bold;
-    color: #0a6624; /* Mesmo verde da borda */
+    color: #0a6624; /* verde padrão */
 }
 
+/* ERRO */
 .popup.error {
     border-left-color: #ff4c4c !important;
 }
@@ -139,6 +140,16 @@ body {
     color: #ff4c4c !important;
 }
 
+/* SUCESSO */
+.popup.success {
+    border-left-color: #0a6624 !important;
+}
+
+.popup.success .icon {
+    color: #0a6624 !important;
+}
+
+/* TEXTO */
 .popup .text .title {
     margin: 0;
     font-size: 17px;
@@ -149,8 +160,6 @@ body {
 .popup .text .message {
     margin: 4px 0 0;
     font-size: 14.5px;
-    color: #d8e1eb; /* Levemente cinza-azulado */
+    color: #d8e1eb;
     line-height: 1.35;
 }
-
-
