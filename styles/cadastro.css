@@ -99,33 +99,36 @@ body {
 }
 
 
+/* POPUP*/
 .popup {
     position: fixed;
-    top: 25px;
-    right: -400px; 
-    background: #1d1f27;
-    padding: 18px 22px;
-    border-radius: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.85);
+    background: #0D1321; /* Azul mais escuro do seu layout */
+    padding: 20px 24px;
+    border-radius: 8px;   /* 🔹 Mais quadradinho */
     display: flex;
     gap: 15px;
     align-items: center;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-    border-left: 5px solid #0a6624;
-    transition: right 0.4s ease, opacity 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    border-left: 6px solid #0a6624; /* Verde existente */
     opacity: 0;
     z-index: 9999;
-    width: 280px;
+    width: 300px;
+    max-width: 90%;
+    transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .popup.show {
-    right: 20px;
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .popup .icon {
     font-size: 26px;
     font-weight: bold;
-    color: #0f0; 
+    color: #0a6624; /* Mesmo verde da borda */
 }
 
 .popup.error {
@@ -138,14 +141,16 @@ body {
 
 .popup .text .title {
     margin: 0;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
-    color: #fff;
+    color: #ffffff;
 }
 
 .popup .text .message {
-    margin: 2px 0 0;
-    font-size: 14px;
-    line-height: 1.3;
-    color: #d6d9e0;
+    margin: 4px 0 0;
+    font-size: 14.5px;
+    color: #d8e1eb; /* Levemente cinza-azulado */
+    line-height: 1.35;
 }
+
+
