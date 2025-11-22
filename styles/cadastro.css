@@ -71,6 +71,7 @@ body {
     border-radius: 5px;
 }
 
+.btn,
 .signupBtn {
     font-family: 'Sora', sans-serif;
     width: 100%;
@@ -97,7 +98,7 @@ body {
     color: #000;
 }
 
-/* POPUP */
+/* POPUP NORMAL */
 .popup {
     position: fixed;
     top: 50%;
@@ -118,20 +119,17 @@ body {
     border-left: 6px solid #0a6624; 
 }
 
-/* ANIMAÇÃO */
 .popup.show {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* ÍCONE */
 .popup .icon {
     font-size: 26px;
     font-weight: bold;
-    color: #0a6624; /* verde padrão */
+    color: #0a6624;
 }
 
-/* ERRO */
 .popup.error {
     border-left-color: #ff4c4c !important;
 }
@@ -140,7 +138,6 @@ body {
     color: #ff4c4c !important;
 }
 
-/* SUCESSO */
 .popup.success {
     border-left-color: #0a6624 !important;
 }
@@ -149,7 +146,6 @@ body {
     color: #0a6624 !important;
 }
 
-/* TEXTO */
 .popup .text .title {
     margin: 0;
     font-size: 17px;
@@ -162,4 +158,51 @@ body {
     font-size: 14.5px;
     color: #d8e1eb;
     line-height: 1.35;
+}
+
+/* ========================= */
+/* POPUP DO QR CODE (MODAL)  */
+/* ========================= */
+
+#qr-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 10000;
+}
+
+#qr-popup .mfa-popup-content {
+    background: #0D1321;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    width: 300px;
+    color: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+#qrPopupImg {
+    width: 180px;
+    height: 180px;
+    border-radius: 6px;
+    margin: 15px 0;
+}
+
+#closeQRBtn {
+    background: #0a6624;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 15px;
 }
