@@ -9,8 +9,27 @@ async function signup() {
     userType: document.getElementById("userType").value,
   };
 
+  // 🔹 Verifica campos vazios
   if (!data.name || !data.email || !data.password) {
     showPopup("Erro", "Preencha todos os campos!", false);
+    return;
+  }
+
+  // 🔍 Validação de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(data.email)) {
+    showPopup("Erro", "Digite um e-mail válido (ex: exemplo@gmail.com)", false);
+    return;
+  }
+
+  // 🔐 Validação de senha forte
+  const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+  if (!senhaRegex.test(data.password)) {
+    showPopup(
+      "Erro",
+      "A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e símbolo especial.",
+      false
+    );
     return;
   }
 
@@ -23,7 +42,6 @@ async function signup() {
 
     const result = await res.json();
 
-    // ✅ Verifica resposta do servidor
     if (res.ok) {
       const qrUrl =
         result.qrCodeUrl ||
@@ -46,6 +64,7 @@ async function signup() {
     showPopup("Erro", "Não foi possível conectar ao servidor.", false);
   }
 }
+
 
 // 🔹 Exibe popup com QR Code de autenticação MFA
 function showQRPopup(qrUrl) {
