@@ -92,7 +92,6 @@ function showQRPopup(qrUrl) {
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
 
-
   popup.className = success ? "popup success" : "popup error";
 
   const icon = document.createElement("div");
