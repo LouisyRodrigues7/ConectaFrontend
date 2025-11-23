@@ -7,6 +7,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/cadastro.css">
+  <link rel="stylesheet" href="styles/popup_recovery.css">
 
   <script type="module" src="js/signup.js" defer></script>
 </head>
@@ -37,6 +38,26 @@
     Já tem uma conta? <a href="index.html"><b>Entrar</b></a>
   </p>
 
+</div>
+
+<!-- POPUP DO QR CODE -->
+<div id="qr-popup" class="hidden-popup">
+  <div class="mfa-popup-content">
+    <h3>📱 Autenticação MFA</h3>
+    <p>Escaneie este QR Code no Microsoft Authenticator.</p>
+    <img id="qrPopupImg" alt="QR Code MFA">
+    <button id="continueBtn">Continuar</button>
+  </div>
+</div>
+
+<!-- POPUP DOS RECOVERY CODES -->
+<div id="recovery-popup" class="hidden-popup">
+  <div class="recovery-box">
+    <h3>🔐 Códigos de Recuperação</h3>
+    <p>Guarde esses códigos em local seguro. Eles serão usados caso você perca o acesso ao Authenticator.</p>
+    <ul id="recoveryList"></ul>
+    <button id="finishBtn">Concluir</button>
+  </div>
 </div>
 
 </body>

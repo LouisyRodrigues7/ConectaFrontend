@@ -1,0 +1,36 @@
+.hidden-popup {
+    display: none;
+  }
+  
+  #qr-popup, #recovery-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .mfa-popup-content, .recovery-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 340px;
+    text-align: center;
+  }
+  
+  #recoveryList {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  #recoveryList li {
+    background: #f2f2f2;
+    margin: 6px 0;
+    padding: 8px;
+    border-radius: 6px;
+  }
+  
