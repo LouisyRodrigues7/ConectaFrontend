@@ -116,3 +116,15 @@ body {
     width: 300px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
+
+.reset-links {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+  
+  .reset-links a {
+    color: #000;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  

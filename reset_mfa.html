@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resetar QR Code</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/auth.css">
+
+  <script type="module" src="js/reset_mfa.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="center-box">
+
+      <img src="assets/Logo ConectaBus (1).svg" class="logo-img">
+
+      <p class="title">Resetar QR Code</p>
+
+      <input id="email" type="email" placeholder="Seu e-mail" class="input-field">
+      <input id="recovery_code" type="text" placeholder="Código de recuperação" class="input-field">
+
+      <button id="resetMfaBtn" class="btn">Gerar novo QR Code</button>
+
+      <div id="qrContainer" style="display:none; margin-top:20px;">
+        <p>Novo QR Code:</p>
+        <img id="qrImage" style="width:200px; margin-top:10px;">
+      </div>
+
+      <p class="signup-text">
+        <a href="index.html">Voltar ao login</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
