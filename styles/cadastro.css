@@ -164,20 +164,16 @@ body {
 /* POPUP DO QR CODE (MODAL)  */
 /* ========================= */
 
-#qr-popup {
+#qr-popup,
+#recovery-popup {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-
-    background: rgba(0, 0, 0, 0.65);
-    display: none;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none; /* <-- fica escondido até JS abrir */
     justify-content: center;
     align-items: center;
-
-    z-index: 10000;
 }
+
 
 #qr-popup .mfa-popup-content {
     background: #0D1321;
