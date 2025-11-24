@@ -39,15 +39,38 @@
 
 </div>
 
-<!-- POPUP DO QR CODE -->
+<!-- POPUP DO QR CODE (MFA) -->
+<<!-- POPUP DO QR CODE (MFA) -->
 <div id="qr-popup">
   <div class="mfa-popup-content">
     <h3>📱 Autenticação MFA</h3>
     <p>Escaneie este QR Code no Microsoft Authenticator.</p>
+
     <img id="qrPopupImg" alt="QR Code MFA">
+
+    <!-- RECOVERY CODES -->
+    <div id="recoveryBox" style="display:none; margin-top:15px; text-align:left;">
+      <h4>Códigos de Recuperação:</h4>
+      <ul id="recoveryList" style="padding-left:18px;"></ul>
+      <p style="font-size:12px; opacity:0.8;">Guarde esses códigos em um local seguro.</p>
+    </div>
+
+    <!-- reset do QR CODE -->
+    <p id="resetQrText" style="display:none; margin-top:10px; font-size:13px;">
+      Para redefinir o QR Code, use o código: <br>
+      <strong id="resetQrCode"></strong>
+    </p>
+
+    <!-- reset de senha -->
+    <p id="resetPassText" style="display:none; margin-top:10px; font-size:13px;">
+      Para redefinir a senha, use o código: <br>
+      <strong id="resetPassCode"></strong>
+    </p>
+
     <button id="closeQRBtn">Fechar</button>
   </div>
 </div>
+
 
 </body>
 </html>
