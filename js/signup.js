@@ -42,9 +42,9 @@ async function signup() {
 
     const result = await res.json();
 
-    // Se servidor retornou o QR Code
+    // Pop-up MFA com tudo incluso
     if (res.ok && result.qrCodeUrl) {
-      showQRPopup(result.qrCodeUrl);
+      showQRPopup(result);
       return;
     }
 
@@ -61,25 +61,47 @@ async function signup() {
   }
 }
 
-// Exibe popup com QR Code
-function showQRPopup(qrUrl) {
+// Exibe popup com QR Code + recovery codes + tokens
+function showQRPopup(result) {
   const popup = document.getElementById("qr-popup");
-  const qrImg = document.getElementById("qrPopupImg");
-
-  qrImg.src = qrUrl;
   popup.style.display = "flex";
 
+  document.getElementById("qrPopupImg").src = result.qrCodeUrl;
+
+  // Recovery Codes
+  if (result.recoveryCodes?.length) {
+    const list = document.getElementById("recoveryList");
+    list.innerHTML = "";
+    result.recoveryCodes.forEach(code => {
+      const li = document.createElement("li");
+      li.innerText = code;
+      list.appendChild(li);
+    });
+
+    document.getElementById("recoveryBox").style.display = "block";
+  }
+
+  // Código para resetar QR
+  if (result.resetQrToken) {
+    document.getElementById("resetQrCode").innerText = result.resetQrToken;
+    document.getElementById("resetQrText").style.display = "block";
+  }
+
+  // Código para resetar senha
+  if (result.resetPasswordToken) {
+    document.getElementById("resetPassCode").innerText = result.resetPasswordToken;
+    document.getElementById("resetPassText").style.display = "block";
+  }
+
+  // Fechar popup
   document.getElementById("closeQRBtn").onclick = () => {
     popup.style.display = "none";
     showPopup("Sucesso", "Conta criada com MFA configurado!", true);
-
-    setTimeout(() => {
-      window.location.href = "index.html";
-    }, 1000);
+    setTimeout(() => (window.location.href = "index.html"), 1000);
   };
 }
 
-// Popup estilizado genérico
+// Popup estilizado normal
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
   popup.className = success ? "popup success" : "popup error";
