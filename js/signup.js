@@ -9,20 +9,27 @@ async function signup() {
     userType: document.getElementById("userType").value,
   };
 
+  // Verifica campos vazios
   if (!data.name || !data.email || !data.password) {
     showPopup("Erro", "Preencha todos os campos!", false);
     return;
   }
 
+  // Validação de email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(data.email)) {
-    showPopup("Erro", "Digite um e-mail válido", false);
+    showPopup("Erro", "Digite um e-mail válido (ex: exemplo@gmail.com)", false);
     return;
   }
 
+  // Validação de senha forte
   const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
   if (!senhaRegex.test(data.password)) {
-    showPopup("Erro", "A senha deve ter 8+ caracteres, letras e símbolo.", false);
+    showPopup(
+      "Erro",
+      "A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e símbolo especial.",
+      false
+    );
     return;
   }
 
@@ -35,62 +42,56 @@ async function signup() {
 
     const result = await res.json();
 
-    if (!res.ok) {
+    if (res.ok) {
+      const qrUrl =
+        result.qrCodeUrl ||
+        (result.data && result.data.qrCodeUrl) ||
+        null;
+
+      if (qrUrl) {
+        showQRPopup(qrUrl);
+      } else if (result.success) {
+        showPopup("Sucesso", "Cadastro realizado!", true);
+        setTimeout(() => (window.location.href = "index.html"), 1500);
+      } else {
+        showPopup("Erro", result.message || "Falha ao cadastrar usuário.", false);
+      }
+    } else {
       showPopup("Erro", result.message || "Erro no servidor.", false);
-      return;
     }
-
-    const qrUrl = result.qrCodeUrl;
-    const recoveryCodes = result.recoveryCodes; // ← precisa existir no backend
-
-    if (qrUrl) {
-      showQRPopup(qrUrl, recoveryCodes);
-    }
-
   } catch (error) {
     console.error("Erro no cadastro:", error);
-    showPopup("Erro", "Falha ao conectar com o servidor.", false);
+    showPopup("Erro", "Não foi possível conectar ao servidor.", false);
   }
 }
 
-// Exibe popup com QR + depois recovery codes
-function showQRPopup(qrUrl, recoveryCodes) {
+// Exibe popup com QR Code de autenticação MFA
+function showQRPopup(qrUrl) {
   const popup = document.getElementById("qr-popup");
   const qrImg = document.getElementById("qrPopupImg");
 
+  if (!popup || !qrImg) {
+    console.error("Popup de QR Code não encontrado no HTML.");
+    return;
+  }
+
   qrImg.src = qrUrl;
-  popup.classList.remove("hidden-popup");
+  popup.style.display = "flex";
 
-  document.getElementById("continueBtn").onclick = () => {
-    popup.classList.add("hidden-popup");
-    showRecoveryPopup(recoveryCodes);
-  };
+  const closeBtn = document.getElementById("closeQRBtn");
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      popup.style.display = "none";
+      showPopup("Sucesso", "Conta criada com MFA configurado!", true);
+      setTimeout(() => (window.location.href = "index.html"), 1000);
+    };
+  }
 }
 
-// Exibe os códigos de recuperação
-function showRecoveryPopup(codes) {
-  const popup = document.getElementById("recovery-popup");
-  const list = document.getElementById("recoveryList");
-
-  popup.classList.remove("hidden-popup");
-  list.innerHTML = "";
-
-  codes.forEach(c => {
-    const li = document.createElement("li");
-    li.textContent = c;
-    list.appendChild(li);
-  });
-
-  document.getElementById("finishBtn").onclick = () => {
-    popup.classList.add("hidden-popup");
-    showPopup("Sucesso", "Cadastro completo!", true);
-    setTimeout(() => (window.location.href = "index.html"), 1200);
-  };
-}
-
-// Popup genérico
+// Popup genérico estilizado
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
+
 
   popup.className = success ? "popup success" : "popup error";
 
@@ -101,14 +102,16 @@ function showPopup(title, message, success = true) {
   const text = document.createElement("div");
   text.className = "text";
 
-  const h3 = document.createElement("h3");
-  h3.innerText = title;
+  const popupTitle = document.createElement("h3");
+  popupTitle.className = "title";
+  popupTitle.innerText = title;
 
-  const p = document.createElement("p");
-  p.innerText = message;
+  const popupMessage = document.createElement("p");
+  popupMessage.className = "message";
+  popupMessage.innerText = message;
 
-  text.appendChild(h3);
-  text.appendChild(p);
+  text.appendChild(popupTitle);
+  text.appendChild(popupMessage);
 
   popup.appendChild(icon);
   popup.appendChild(text);
@@ -116,12 +119,15 @@ function showPopup(title, message, success = true) {
   document.body.appendChild(popup);
 
   setTimeout(() => popup.classList.add("show"), 10);
+
   setTimeout(() => {
     popup.classList.remove("show");
     setTimeout(() => popup.remove(), 300);
   }, 2500);
 }
 
+// Garante que o botão só seja vinculado após o DOM carregar
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("signupBtn").addEventListener("click", signup);
+  const btn = document.getElementById("signupBtn");
+  if (btn) btn.addEventListener("click", signup);
 });
