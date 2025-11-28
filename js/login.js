@@ -89,30 +89,79 @@ function closeMfaPopup() {
   }
 }
 
-// ✅ Popup visual padrão
 function showPopup(title, message, success = true) {
   const popup = document.createElement("div");
-  popup.className = "popup-message";
+  popup.className = "popup"; // mantém a classe principal
+
+  // aplica estilos equivalentes ao CSS
   Object.assign(popup.style, {
     position: "fixed",
-    top: "20px",
-    right: "20px",
-    backgroundColor: success ? "#0a6624" : "#c33",
-    padding: "12px 18px",
-    borderRadius: "10px",
-    color: "#fff",
-    zIndex: 9999,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%) scale(0.85)",
+    background: "#0D1321",
+    padding: "20px 24px",
+    borderRadius: "8px",
+    display: "flex",
+    gap: "15px",
+    alignItems: "center",
+    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.45)",
     opacity: "0",
-    transition: "opacity 0.3s",
+    zIndex: 9999,
+    width: "300px",
+    maxWidth: "90%",
+    transition: "opacity 0.35s ease, transform 0.35s ease",
+    borderLeft: `6px solid ${success ? "#0a6624" : "#ff4c4c"}`
   });
-  popup.innerHTML = `<strong>${title}</strong><br>${message}`;
+
+  // ícone
+  const icon = document.createElement("div");
+  icon.className = "icon";
+  icon.style.fontSize = "26px";
+  icon.style.fontWeight = "bold";
+  icon.style.color = success ? "#0a6624" : "#ff4c4c";
+  icon.textContent = success ? "✔" : "✖";
+
+  // texto
+  const textBox = document.createElement("div");
+  textBox.className = "text";
+
+  const titleEl = document.createElement("p");
+  titleEl.className = "title";
+  titleEl.textContent = title;
+  titleEl.style.margin = "0";
+  titleEl.style.fontSize = "17px";
+  titleEl.style.fontWeight = "600";
+  titleEl.style.color = "#ffffff";
+
+  const messageEl = document.createElement("p");
+  messageEl.className = "message";
+  messageEl.textContent = message;
+  messageEl.style.margin = "4px 0 0";
+  messageEl.style.fontSize = "14.5px";
+  messageEl.style.color = "#d8e1eb";
+  messageEl.style.lineHeight = "1.35";
+
+  textBox.appendChild(titleEl);
+  textBox.appendChild(messageEl);
+
+  popup.appendChild(icon);
+  popup.appendChild(textBox);
+
   document.body.appendChild(popup);
 
-  setTimeout(() => (popup.style.opacity = "1"), 10);
+  // efeito show
+  setTimeout(() => {
+    popup.style.opacity = "1";
+    popup.style.transform = "translate(-50%, -50%) scale(1)";
+  }, 10);
+
+  // efeito hide e remoção
   setTimeout(() => {
     popup.style.opacity = "0";
-    setTimeout(() => popup.remove(), 400);
-  }, 2500);
+    popup.style.transform = "translate(-50%, -50%) scale(0.85)";
+    setTimeout(() => popup.remove(), 350);
+  }, 3000);
 }
 
 // ⚙️ Eventos
@@ -120,4 +169,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("loginBtn")?.addEventListener("click", login);
   document.getElementById("verifyMfaBtn")?.addEventListener("click", verifyMfa);
   document.getElementById("closeMfaBtn")?.addEventListener("click", closeMfaPopup);
+});
+
+const tokenInput = document.getElementById("token");
+
+tokenInput.addEventListener("input", () => {
+    tokenInput.placeholder = tokenInput.value.length > 0 ? "" : "Código MFA";
 });

@@ -121,7 +121,7 @@ function showPopup(title, message, success = true) {
   setTimeout(() => {
     popup.classList.remove("show");
     setTimeout(() => popup.remove(), 300);
-  }, 2500);
+  }, 3000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

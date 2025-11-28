@@ -120,11 +120,11 @@ body {
 .reset-links {
     margin-top: 10px;
     font-size: 13px;
-  }
-  
-  .reset-links a {
+}
+
+.reset-links a {
     color: #000;
     text-decoration: underline;
     cursor: pointer;
-  }
-  
+}
+
