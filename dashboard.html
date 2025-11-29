@@ -20,7 +20,6 @@
         <option value="4">061 - Piedade / Conde da Boa Vista</option>
       </select>
       
-      
       <select id="periodoSelect">
         <option value="24h">Últimas 24 horas</option>
         <option value="7d">Últimos 7 dias</option>
@@ -56,6 +55,26 @@
       <h3>Parada com mais fluxo</h3>
       <p id="topParada">–</p>
     </div>
+  </section>
+
+  <!--  NOVA ÁREA DE GERAR PDF  -->
+  <section class="report-section">
+    <h2>Gerar Relatório em PDF</h2>
+
+    <div class="report-controls">
+      <select id="periodoRelatorio">
+        <option value="24h">Últimas 24 horas</option>
+        <option value="7d">Últimos 7 dias</option>
+        <option value="1m">Último mês</option>
+        <option value="3m">Últimos 3 meses</option>
+        <option value="6m">Últimos 6 meses</option>
+        <option value="1a">Último ano</option>
+      </select>
+
+      <button id="btnGerarPDF">Criar PDF</button>
+    </div>
+
+    <p id="statusPDF" class="status-pdf"></p>
   </section>
 
   <main class="charts">

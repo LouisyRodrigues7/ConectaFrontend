@@ -272,3 +272,57 @@
     transform: translateY(0);
   }
 }
+
+
+/*  ÁREA DO RELATÓRIO PDF */
+.report-section {
+  margin: 40px auto;
+  width: 90%;
+  background: var(--card-bg, #1f1f1f);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #0003;
+}
+
+.report-section h2 {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.report-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.report-controls select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: white;
+  font-size: 14px;
+}
+
+.report-controls button {
+  padding: 10px 20px;
+  background: #2b4eff;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.report-controls button:hover {
+  background: #1d36bb;
+}
+
+.status-pdf {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  opacity: 0.8;
+}
