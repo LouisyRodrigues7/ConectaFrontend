@@ -17,8 +17,9 @@
         <option value="1">014 - Brasília / Conde da Boa Vista</option>
         <option value="2">032 - Setúbal / Conde da Boa Vista</option>
         <option value="3">101 - Circular Conde da Boa Vista / Joana Bezerra</option>
-        <option value="4">061 - Piedade / Conde da Boa Vista</option>
+        <option value="4">061 - Piedade / Conde da Boa Vista</option>        
       </select>
+      
       
       <select id="periodoSelect">
         <option value="24h">Últimas 24 horas</option>
@@ -39,6 +40,7 @@
         </label>
         <i id="moonIcon" class="fas fa-moon theme-icon"></i>
       </div>
+      <button onclick="logout()" class="logout-btn">Deslogar</button>
     </div>
   </header>
 
@@ -55,26 +57,6 @@
       <h3>Parada com mais fluxo</h3>
       <p id="topParada">–</p>
     </div>
-  </section>
-
-  <!--  NOVA ÁREA DE GERAR PDF  -->
-  <section class="report-section">
-    <h2>Gerar Relatório em PDF</h2>
-
-    <div class="report-controls">
-      <select id="periodoRelatorio">
-        <option value="24h">Últimas 24 horas</option>
-        <option value="7d">Últimos 7 dias</option>
-        <option value="1m">Último mês</option>
-        <option value="3m">Últimos 3 meses</option>
-        <option value="6m">Últimos 6 meses</option>
-        <option value="1a">Último ano</option>
-      </select>
-
-      <button id="btnGerarPDF">Criar PDF</button>
-    </div>
-
-    <p id="statusPDF" class="status-pdf"></p>
   </section>
 
   <main class="charts">
@@ -101,5 +83,15 @@
   </footer>
 
   <script src="js/dashboard.js"></script>
+  <script>
+  function logout() {
+    // Limpa dados de sessão
+    sessionStorage.clear();
+    localStorage.clear();
+
+    // Redireciona para a página de login
+    window.location.href = "index.html";
+  }
+</script>
 </body>
 </html>

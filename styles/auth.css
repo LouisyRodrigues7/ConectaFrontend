@@ -109,7 +109,7 @@ body {
 }
 
 .mfa-popup-content {
-    background: white;
+    background: #0D1321;
     padding: 25px;
     border-radius: 12px;
     text-align: center;
@@ -128,3 +128,28 @@ body {
     cursor: pointer;
 }
 
+/* ------- Ajustes de estilo do popup MFA ------- */
+
+/* Títulos e textos em branco */
+.mfa-title,
+.mfa-description {
+    color: #ffffff;
+    font-family: 'Sora', sans-serif;
+}
+
+/* Tamanho menor do texto da descrição */
+.mfa-description {
+    font-size: 13px;
+}
+
+/* Placeholder com fonte Sora e cor clara */
+#mfa-popup input::placeholder {
+    font-family: 'Sora', sans-serif;
+    color: #ccc;
+}
+
+/* Botões com fonte Sora */
+#mfa-popup button {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+}
