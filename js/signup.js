@@ -68,15 +68,27 @@ function showQRPopup(result) {
 
   document.getElementById("qrPopupImg").src = result.qrCodeUrl;
 
-  // Recovery Codes
+  // Recovery Codes em duas colunas
   if (result.recoveryCodes?.length) {
-    const list = document.getElementById("recoveryList");
-    list.innerHTML = "";
-    result.recoveryCodes.forEach(code => {
-      const li = document.createElement("li");
-      li.innerText = code;
-      list.appendChild(li);
-    });
+    const leftList = document.getElementById("leftList");
+    const rightList = document.getElementById("rightList");
+
+    leftList.innerHTML = "";
+    rightList.innerHTML = "";
+
+    const codes = result.recoveryCodes;
+
+    // 2 primeiros na esquerda
+    leftList.innerHTML = `
+      <li>${codes[0]}</li>
+      <li>${codes[1]}</li>
+    `;
+
+    // 2 últimos na direita
+    rightList.innerHTML = `
+      <li>${codes[2]}</li>
+      <li>${codes[3]}</li>
+    `;
 
     document.getElementById("recoveryBox").style.display = "block";
   }
@@ -100,6 +112,7 @@ function showQRPopup(result) {
     setTimeout(() => (window.location.href = "index.html"), 1000);
   };
 }
+
 
 // Popup estilizado normal
 function showPopup(title, message, success = true) {

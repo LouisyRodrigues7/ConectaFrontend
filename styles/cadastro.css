@@ -208,3 +208,15 @@ body {
     width: 100%;
     font-size: 15px;
 }
+
+.recovery-columns {
+    display: flex;
+    justify-content: center; 
+    gap: 150px;               
+}
+
+.recovery-columns ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+}

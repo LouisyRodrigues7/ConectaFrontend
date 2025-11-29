@@ -40,7 +40,6 @@
 </div>
 
 <!-- POPUP DO QR CODE (MFA) -->
-<<!-- POPUP DO QR CODE (MFA) -->
 <div id="qr-popup">
   <div class="mfa-popup-content">
     <h3>📱 Autenticação MFA</h3>
@@ -49,9 +48,15 @@
     <img id="qrPopupImg" alt="QR Code MFA">
 
     <!-- RECOVERY CODES -->
-    <div id="recoveryBox" style="display:none; margin-top:15px; text-align:left;">
+    <div id="recoveryBox" style="display:none; margin-top:-10px; text-align:center;">
       <h4>Códigos de Recuperação:</h4>
-      <ul id="recoveryList" style="padding-left:18px;"></ul>
+
+      <!-- ✅ SUBSTITUIÇÃO AQUI → 2 COLUNAS -->
+      <div class="recovery-columns">
+        <ul id="leftList"></ul>
+        <ul id="rightList"></ul>
+      </div>
+
       <p style="font-size:12px; opacity:0.8;">Guarde esses códigos em um local seguro.</p>
     </div>
 
@@ -70,7 +75,6 @@
     <button id="closeQRBtn">Fechar</button>
   </div>
 </div>
-
 
 </body>
 </html>
