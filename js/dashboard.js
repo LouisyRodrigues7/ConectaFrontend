@@ -234,7 +234,7 @@ setTema(savedTheme === null || savedTheme === "dark");
 
 createCharts();
 
-/* ★★★★★ ADIÇÃO PARA GERAR PDF ★★★★★ */
+/* ADIÇÃO PARA GERAR PDF  */
 const btnGerarPDF = document.getElementById("btnGerarPDF");
 const periodoRelatorio = document.getElementById("periodoRelatorio");
 const statusPDF = document.getElementById("statusPDF");
@@ -246,7 +246,7 @@ if (btnGerarPDF) {
     statusPDF.textContent = "Gerando PDF...";
 
     try {
-      const res = await fetch(`http://localhost:5000/api/relatorio/gerar?periodo=${periodo}`);
+      const res = await fetch(`https://conectabackendv2.onrender.com/api/relatorios/gerar-relatorio?periodo=${periodo}`);
 
       if (!res.ok) {
         statusPDF.textContent = "Erro ao gerar relatório.";
@@ -268,3 +268,4 @@ if (btnGerarPDF) {
     }
   });
 }
+
