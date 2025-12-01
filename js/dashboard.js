@@ -257,3 +257,35 @@ const savedTheme = localStorage.getItem("theme");
 setTema(savedTheme === null || savedTheme === "dark");
 
 createCharts();
+document.getElementById("btnGerarPDF").addEventListener("click", async () => {
+  const periodo = document.getElementById("periodoPDF").value;
+
+  try {
+    const res = await fetch(`https://conectabackendv2.onrender.com/api/relatorio/gerar-relatorio?periodo=${periodo}`, {
+      method: "GET"
+    });
+
+    if (!res.ok) {
+      alert("Erro ao gerar PDF (Backend respondeu com erro).");
+      return;
+    }
+
+    // Recebendo PDF como blob
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    // Criando link para download
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `Relatorio_ConectaBus_${periodo}.pdf`;
+    a.click();
+
+    // Limpando URL temporária
+    window.URL.revokeObjectURL(url);
+
+  } catch (err) {
+    console.error("Erro ao baixar PDF:", err);
+    alert("Não foi possível gerar o PDF. Verifique se o backend está online.");
+  }
+});
+
