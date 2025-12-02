@@ -24,6 +24,27 @@
   <input id="email" type="email" placeholder="E-mail:" class="input-field">
   <input id="password" type="password" placeholder="Senha:" class="input-field">
 
+  <div id="passwordRules" style="
+  font-size: 13px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  color: #000000;
+  line-height: 1.6;
+  text-align: left;
+  width: 100%;
+  padding-left: 6px;
+">
+  <p style="margin:2px 0;">A senha deve incluir:</p>
+
+  <p id="ruleLength"     style="margin:2px 0;">❌ Mínimo de 8 caracteres</p>
+  <p id="ruleUpper"      style="margin:2px 0;">❌ Pelo menos 1 letra maiúscula</p>
+  <p id="ruleLower"      style="margin:2px 0;">❌ Pelo menos 1 letra minúscula</p>
+  <p id="ruleSpecial"    style="margin:2px 0;">❌ Pelo menos 1 caractere especial (! @ # $ % & *)</p>
+</div>
+
+
+
+
   <p class="userTitle">Tipo de usuário:</p>
   <select id="userType" class="input-field">
     <option value="Estudante">Estudante</option>
@@ -76,5 +97,7 @@
   </div>
 </div>
 
+
+  
 </body>
 </html>

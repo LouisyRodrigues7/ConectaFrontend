@@ -140,3 +140,37 @@ function showPopup(title, message, success = true) {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("signupBtn").addEventListener("click", signup);
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const passwordInput = document.getElementById("password");
+
+  if (!passwordInput) return;
+
+  passwordInput.addEventListener("input", function () {
+    const pass = this.value;
+
+    // Regras
+    const lengthOK  = pass.length >= 8;
+    const upperOK   = /[A-Z]/.test(pass);
+    const lowerOK   = /[a-z]/.test(pass);
+    const specialOK = /[!@#$%&*]/.test(pass);
+
+    // Atualiza visual
+    document.getElementById("ruleLength").textContent  =
+      (lengthOK ? "✔️" : "❌") + " Mínimo de 8 caracteres";
+
+    document.getElementById("ruleUpper").textContent   =
+      (upperOK ? "✔️" : "❌") + " Pelo menos 1 letra maiúscula";
+
+    document.getElementById("ruleLower").textContent   =
+      (lowerOK ? "✔️" : "❌") + " Pelo menos 1 letra minúscula";
+
+    document.getElementById("ruleSpecial").textContent =
+      (specialOK ? "✔️" : "❌") + " Pelo menos 1 caractere especial (! @ # $ % & *)";
+
+    // Cores
+    document.getElementById("ruleLength").style.color  = lengthOK  ? "#18a300" : "#b30000";
+    document.getElementById("ruleUpper").style.color   = upperOK   ? "#18a300" : "#b30000";
+    document.getElementById("ruleLower").style.color   = lowerOK   ? "#18a300" : "#b30000";
+    document.getElementById("ruleSpecial").style.color = specialOK ? "#18a300" : "#b30000";
+  });
+});
